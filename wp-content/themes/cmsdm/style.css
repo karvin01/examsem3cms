@@ -4,3 +4,151 @@ Author: Alex Karel
 Version: 1.0.0
 Description: A custom WordPress theme built from scratch.
 */
+
+/*HEADER*/
+/* Reset & Base Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1a1a1a;
+    background-color: #ffffff;
+}
+
+/* Header Container */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* 1. Left: Logo Placeholder */
+.logo img {
+    height: 60px;
+    width: auto;
+    display: block;
+}
+
+/* 2. Middle: Navigation */
+.main-nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.main-nav a:hover {
+    color: #000000;
+}
+
+/* 3. Right: Cart Icon */
+.cart a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;            
+    text-decoration: none;   
+    color: #1a1a1a;          
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: opacity 0.2s ease;
+    width: 180px
+}
+
+.cart a:hover {
+    color: #1a1a1a;          
+    opacity: 0.7;           
+    text-decoration: none;
+}
+/*HEADER END*/
+
+/*FOOTER*/
+.site-footer {
+    background-color: #1A1A1A;
+    color: #f1f5f9;
+    padding: 4rem 2.5rem 2rem;
+    margin-top: auto;
+    border-top: 1px solid #2d2d2d;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-col h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: #ffffff;
+    text-transform: capitalize;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-col a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+    color: #ffffff;
+}
+
+.footer-logo img {
+    height: 100px;
+    width: auto;
+    display: block;
+}
+
+/* Social Media Column with SVGs */
+.footer-socials a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    line-height: 1;
+}
+
+.footer-socials svg {
+    display: block;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+    transform: translateY(1px);
+}
+
+.footer-socials a:hover svg {
+    transform: scale(1.1);
+}
+/*FOOTER END*/
