@@ -54,7 +54,6 @@
     </div>
 </footer>
 
-<!-- Required by WordPress to inject scripts and admin bar before </body> -->
 <?php wp_footer(); ?>
 </body>
 </html>

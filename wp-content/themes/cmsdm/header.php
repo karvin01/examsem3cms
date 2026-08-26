@@ -3,8 +3,6 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Required by WordPress to inject styles, meta tags, and plugin scripts -->
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -13,6 +11,7 @@
 <header class="site-header">
     <div class="logo">
         <a href="<?php echo home_url(); ?>">
+            <!-- Logo Image -->
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/LogoMotoshop1.png" alt="Motoshop Logo">
         </a>
     </div>
@@ -28,7 +27,7 @@
 
     <div class="cart">
         <a href="<?php echo home_url('/cart'); ?>">
-        <!-- SVG icon for cart -->
+        <!-- Cart Icon -->
          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
             <path d="M0 0h32v32H0z" fill="none" />
             <circle cx="10" cy="28" r="2" fill="currentColor" />
