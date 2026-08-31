@@ -288,10 +288,9 @@ body {
 }
 
 /*video*/
-/* Video Section */
 .video-section {
     padding: 5rem 2rem;
-    background-color: #111827; /* Dark background to match moto theme */
+    background-color: #1A1A1A;
     color: #ffffff;
     text-align: center;
 }
