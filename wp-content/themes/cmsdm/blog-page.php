@@ -1,0 +1,1 @@
+<!-- Blog Page - whenever there is blog post about gear or whatever, it needs the link to the shop part with this stuff-->

@@ -52,10 +52,18 @@
 
             <div class="testimonial-items">
                 <?php for ($i = 1; $i <= 3; $i++) : 
-                    $name   = get_field("testimonial_{$i}_name") ?: "Rider {$i}";
+
+                    $is_active = get_field("testimonial_{$i}_active");
+                    $name   = get_field("testimonial_{$i}_name");
+
+                    // If toggle is OFF or name is empty, skip this review completely
+                        if (!$is_active || empty($name)) {
+                            continue;
+                        }
+
                     $avatar = get_field("testimonial_{$i}_avatar");
                     $rating = (int) (get_field("testimonial_{$i}_rating") ?: 5);
-                    $quote  = get_field("testimonial_{$i}_quote") ?: 'Great customer service. Perfect help with my motorcycle purchase.';
+                    $quote  = get_field("testimonial_{$i}_quote");
                 ?>
                     <div class="testimonial-item">
                         <div class="testimonial-header">
