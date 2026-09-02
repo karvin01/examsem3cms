@@ -12,3 +12,9 @@ function my_theme_scripts() {
     wp_enqueue_style('main-style', get_stylesheet_uri());
 }
 add_action('wp_enqueue_scripts', 'my_theme_scripts');
+
+function remove_comment_website_field($fields) {
+    unset($fields['url']);
+    return $fields;
+}
+add_filter('comment_form_default_fields', 'remove_comment_website_field');

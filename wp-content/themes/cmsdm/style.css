@@ -298,6 +298,7 @@ body {
 .video-container {
     max-width: 900px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .video-container h2 {
@@ -305,6 +306,16 @@ body {
     font-weight: 700;
     margin-bottom: 2rem;
     color: #ffffff;
+}
+
+.video-container iframe {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: none;
+    border-radius: 12px;
+    display: block;
 }
 /*video end*/
 
@@ -395,3 +406,651 @@ body {
 }
 /*Testimonials end*/
 /*FRONT PAGE END*/
+
+
+
+
+
+
+/* ==================================================
+   Blog page
+================================================== */
+.blog-container {
+    max-width: 1000px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.blog-container h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #111827;
+    text-align: center;
+}
+
+
+.blog-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.blog-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    padding: 10px;
+}
+
+.blog-card > a {
+    flex: 0 0 320px;
+    position: relative;
+    align-self: stretch;
+    overflow: hidden;
+}
+
+.blog-card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.blog-card-content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+.blog-card-content h3 a {
+    color: #111827;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.blog-card-content h3 a:hover {
+    color: #e11d48;
+}
+
+.blog-card-content div {
+    color: #4b5563;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.read-more {
+    align-self: flex-end;
+    color: #e11d48;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+/* ==================================================
+   Blog Page end
+================================================== */
+
+/* ==================================================
+   Blog post
+================================================== */
+.single-post-container {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.post-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    line-height: 1.25;
+    color: #111827;
+    margin-bottom: 0.75rem;
+}
+
+.post-meta {
+    font-size: 0.5rem;
+    color: #6b7280;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Post Hero Image */
+.post-featured-image {
+    margin-bottom: 2.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.post-featured-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    display: block;
+}
+
+.post-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #374151;
+}
+
+.post-content h2,
+.post-content h3 {
+    color: #111827;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content ul,
+.post-content ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* Comments Section */
+/* Comments Section Styling */
+.comment-respond {
+    margin-top: 2rem;
+}
+
+.comment-reply-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.logged-in-as,
+.comment-notes {
+    display: none;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.comment-form .required {
+    display: none;
+}
+
+.comment-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+/* Comment textarea & input fields */
+.comment-form textarea,
+.comment-form input[type="text"],
+.comment-form input[type="email"],
+.comment-form input[type="url"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #111827;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.comment-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.comment-form textarea:focus,
+.comment-form input:focus {
+    outline: none;
+    border-color: #e11d48;
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+}
+
+.comment-form-cookies-consent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    flex: 1;
+}
+
+.comment-form-cookies-consent input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: #e11d48;
+    cursor: pointer;
+    margin: 0;
+}
+
+.comment-form-cookies-consent label {
+    margin-bottom: 0 !important;
+    font-size: 0.9rem;
+    color: #4b5563;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+/* Submit button container */
+.comment-form .form-submit {
+    margin: 0;
+    align-self: flex-end;
+}
+
+/* Submit Button */
+.comment-form .form-submit {
+    margin-top: 0.5rem;
+}
+
+.comment-form .submit {
+    background-color: #e11d48;
+    color: #ffffff;
+    padding: 0.75rem 1.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.comment-form .submit:hover {
+    background-color: #be123c;
+}
+
+/* Displayed Comments List */
+.commentlist {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.commentlist li {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.comment-meta {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-bottom: 0.75rem;
+}
+
+.comment-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #374151;
+    line-height: 1.6;
+}
+
+/* comment displayed list*/
+.comments-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 2rem;
+}
+
+.comment-list,
+.commentlist {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.comment-body {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.comment-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.comment-meta .avatar {
+    border-radius: 50%;
+    display: block;
+}
+
+.comment-author .fn {
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-style: normal;
+    color: #111827;
+}
+
+.comment-author .fn a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.comment-author .says {
+    display: none;
+}
+
+.comment-metadata {
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+}
+
+.comment-metadata a {
+    color: #6b7280;
+    text-decoration: none;
+}
+
+.comment-metadata a:hover {
+    text-decoration: underline;
+}
+
+.comment-edit-link {
+    color: #9ca3af !important;
+    margin-left: 0.5rem;
+}
+
+.comment-content p {
+    color: #374151;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+}
+
+.reply a {
+    display: inline-block;
+    color: #e11d48;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.reply a:hover {
+    text-decoration: underline;
+}
+
+/* Reply Heading & Target User */
+.comment-reply-title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.comment-reply-title a[href*="#comment-"] {
+    color: #111827;
+    text-decoration: none;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+/* Cancel Reply Button */
+#cancel-comment-reply-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-decoration: none;
+    margin-left: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: #f9fafb;
+    transition: all 0.2s ease;
+}
+
+#cancel-comment-reply-link:hover {
+    color: #e11d48;
+    border-color: #e11d48;
+    background-color: #fff;
+}
+/* ==================================================
+   Blog post end
+================================================== */
+
+
+/* ==================================================
+   Responsive Breakpoints
+================================================== */
+
+/* --- Tablet Landscape & Smaller Desktop (<= 1024px) --- */
+@media (max-width: 1024px) {
+    .site-header {
+        padding: 0.75rem 1.5rem;
+    }
+
+    .hero-content {
+        padding: 3rem 2rem;
+    }
+
+    .hero-title {
+        font-size: 2.25rem;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .testimonial-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- Tablets & Mobile Devices (<= 768px) --- */
+@media (max-width: 768px) {
+    /* Header Stack / Wrap */
+    .site-header {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .main-nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        padding-top: 0.5rem;
+        border-top: 1px solid #f1f5f9;
+    }
+
+    .main-nav ul {
+        gap: 1.25rem;
+        justify-content: center;
+    }
+
+    .cart a {
+        width: auto;
+    }
+
+    /* Hero Section: Stack Vertically */
+    .hero-container {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .hero-content {
+        padding: 3rem 1.5rem;
+        max-width: 100%;
+        justify-self: stretch;
+        text-align: center;
+    }
+
+    .hero-description {
+        max-width: 100%;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-image {
+        height: 320px;
+        order: -1;
+    }
+
+    /* Testimonials: 1 Column */
+    .testimonial-items {
+        grid-template-columns: 1fr;
+    }
+
+    /* Blog Archive Cards: Stack Vertically */
+    .blog-card {
+        flex-direction: column;
+    }
+
+    .blog-card > a {
+        flex: none;
+        width: 100%;
+        height: 220px;
+    }
+
+    .blog-card-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .blog-card-content div {
+        margin-bottom: 1rem;
+    }
+
+    .read-more {
+        align-self: flex-start;
+    }
+
+    /* Single Blog Post Typography */
+    .single-post-container {
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .post-title {
+        font-size: 1.85rem;
+    }
+
+    .post-featured-image {
+        margin-bottom: 1.5rem;
+    }
+
+    .post-content {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+}
+
+/* --- Mobile Phones (<= 480px) --- */
+@media (max-width: 480px) {
+    .site-header {
+        padding: 0.75rem;
+    }
+
+    .logo img {
+        height: 45px;
+    }
+
+    .hero-title {
+        font-size: 1.85rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .brand-message {
+        padding: 3.5rem 1rem;
+    }
+
+    .brand-message h2,
+    .video-container h2,
+    .testimonials-container h2,
+    .blog-container h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Footer Single Column */
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .site-footer {
+        padding: 3rem 1.5rem 1.5rem;
+    }
+
+    /* Comments Section */
+    .comment-meta {
+        align-items: flex-start;
+    }
+
+    .comment-form-cookies-consent {
+        align-items: flex-start;
+    }
+
+    .comment-form .submit {
+        width: 100%;
+    }
+}
+
+/* ==================================================
+   Responsive Breakpoints end
+================================================== */
