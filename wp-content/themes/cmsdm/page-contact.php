@@ -66,5 +66,60 @@
 </section>
 
 
+<!-- Contact form with mail message -->
+<section class="contact-form-section" id="contact-form-section">
+    <div class="contact-form-container">
+        <h2>Send Us A Message</h2>
 
+        <!-- Check for and display transient errors -->
+        <?php if ( $errors = get_transient('contact_form_errors') ) : ?>
+            <div class="form-feedback error">
+                <ul>
+                    <?php foreach ( $errors as $error ) : ?>
+                        <li><?php echo esc_html($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <?php delete_transient('contact_form_errors'); ?>
+        <?php endif; ?>
+
+        <!-- Check for and display transient success -->
+        <?php if ( $success = get_transient('contact_form_success') ) : ?>
+            <div class="form-feedback success">
+                <p><?php echo esc_html($success); ?></p>
+            </div>
+            <?php delete_transient('contact_form_success'); ?>
+        <?php endif; ?>
+
+        <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST" class="custom-contact-form">
+            <!-- Hidden action matches your add_action name in functions.php -->
+            <input type="hidden" name="action" value="handle_contact_form">
+
+            <!-- Security nonce -->
+            <?php wp_nonce_field('contact_form_action', 'contact_form_nonce'); ?>
+
+            <div class="form-group">
+                <label for="contact_name">Full name <span class="required">*</span></label>
+                <input type="text" name="contact_name" id="contact_name" required minlength="4">
+            </div>
+
+            <div class="form-group">
+                <label for="contact_email">Email <span class="required">*</span></label>
+                <input type="email" name="contact_email" id="contact_email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contact_subject">Subject <span class="required">*</span></label>
+                <input type="text" name="contact_subject" id="contact_subject" required minlength="3">
+            </div>
+
+            <div class="form-group">
+                <label for="contact_message">Message <span class="required">*</span></label>
+                <textarea name="contact_message" id="contact_message" rows="5" required minlength="10"></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+    </div>
+</section>
 <?php get_footer(); ?>

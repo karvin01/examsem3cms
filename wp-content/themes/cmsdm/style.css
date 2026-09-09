@@ -14,7 +14,7 @@ Description: A custom WordPress theme built from scratch.
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #1a1a1a;
     background-color: #ffffff;
 }
@@ -254,6 +254,7 @@ body {
 .hero-image img {
     width: 100%;
     height: 100%;
+    max-width: 900px;
     object-fit: cover;
     object-position: center;
     display: block;
@@ -1025,8 +1026,280 @@ body {
     display: block;
     border: none;
 }
+
+/* mail form */
+.contact-form-section {
+    background-color: #f8fafc;
+    padding: 4rem 2rem;
+}
+
+.contact-form-container {
+    max-width: 650px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form-container h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 1.5rem 0;
+}
+
+/* Form Controls */
+.custom-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-group .required {
+    color: #e11d48;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #0f172a;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #e11d48;
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Submit Button */
+.btn-submit {
+    align-self: flex-start;
+    background-color: #e11d48;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #be123c;
+}
+
+/* Error & Success Notices */
+.form-feedback {
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.form-feedback.error {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.form-feedback.error ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.form-feedback.error li {
+    margin-bottom: 0.25rem;
+}
+
+.form-feedback.error li:last-child {
+    margin-bottom: 0;
+}
+
+.form-feedback.success {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.form-feedback.success p {
+    margin: 0;
+}
 /* ==================================================
    Contact page end
+================================================== */
+
+/* ==================================================
+   Sustainability initiatives page start
+================================================== */
+.sustainability-page {
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Hero Section */
+.sustainability-hero {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 5rem 2rem;
+    text-align: center;
+}
+
+.sustainability-hero-container {
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #e11d48;
+    margin-bottom: 0.75rem;
+}
+
+.sustainability-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+    color: #ffffff;
+}
+
+.sustainability-hero p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* Initiatives Vertical Stack */
+.initiatives-section {
+    padding: 4.5rem 2rem;
+}
+
+.initiatives-container {
+    max-width: 1050px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* Horizontal Card (Text Left, Image Right) */
+.initiative-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Left Column: Content */
+.initiative-text-col {
+    flex: 1.2;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.initiative-tag {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #e11d48;
+    margin-bottom: 0.5rem;
+}
+
+.initiative-header h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.35;
+    margin-bottom: 1rem;
+}
+
+.initiative-content p {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: #475569;
+    margin-bottom: 1rem;
+}
+
+.initiative-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Action / Contact Anchor Button */
+.initiative-action {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.btn-initiative {
+    display: inline-block;
+    background-color: #e11d48;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-initiative:hover {
+    background-color: #be123c;
+}
+
+/* Right Column: Image */
+.initiative-img-col {
+    flex: 0.9;
+    position: relative;
+    min-height: 280px;
+    padding: 10px;
+}
+
+.initiative-img-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+/* ==================================================
+   Sustainability initiatives page end
 ================================================== */
 
 /* ==================================================
@@ -1180,6 +1453,49 @@ body {
         bottom: 0.75rem;
         left: 0.75rem;
         right: 0.75rem;
+    }
+
+    .contact-form-container {
+    padding: 2rem 1.25rem;
+    }
+
+    .btn-submit {
+        width: 100%;
+    }
+
+    .sustainability-hero {
+        padding: 3.5rem 1.5rem;
+    }
+
+    .sustainability-hero h1 {
+        font-size: 1.9rem;
+    }
+
+    .initiatives-section {
+        padding: 3rem 1.25rem;
+    }
+
+    .initiatives-container {
+        gap: 1.5rem;
+    }
+
+    .initiative-card {
+        flex-direction: column;
+    }
+
+    .initiative-text-col {
+        padding: 1.75rem 1.25rem;
+    }
+
+    .initiative-img-col {
+        height: 220px;
+        min-height: auto;
+    }
+
+    .btn-initiative {
+        display: block;
+        text-align: center;
+        width: 100%;
     }
 }
 

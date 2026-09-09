@@ -12,7 +12,7 @@
     <div class="logo">
         <a href="<?php echo home_url(); ?>">
             <!-- Logo Image -->
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/LogoMotoshop1.png" alt="Motoshop Logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/LogoMotoshopHeader1.png" alt="Motoshop Logo">
         </a>
     </div>
 
@@ -21,7 +21,7 @@
             <li><a href="<?php echo home_url('/shop'); ?>">Shop</a></li>
             <li><a href="<?php echo home_url('/categories'); ?>">Categories</a></li>
             <li><a href="<?php echo home_url('/blog'); ?>">Blog</a></li>
-            <li><a href="<?php echo home_url('/about'); ?>">About</a></li>
+            <li><a href="<?php echo home_url('/sustainability'); ?>">Sustainability initiatives</a></li>
             <li><a href="<?php echo home_url('/contact'); ?>">Contact</a></li>
         </ul>
     </nav>

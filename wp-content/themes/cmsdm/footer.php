@@ -2,7 +2,7 @@
     <div class="footer-container">
         <div class="footer-col footer-logo">
             <a href="<?php echo home_url('/'); ?>">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/LogoMotoshop.png" alt="Motoshop Logo">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/LogoMotoshopFooter.png" alt="Motoshop Logo" loading="lazy">
             </a>
         </div>
 

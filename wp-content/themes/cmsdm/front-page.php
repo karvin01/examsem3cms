@@ -38,9 +38,9 @@
                     <h2><?php echo esc_html(get_field('video_title')); ?></h2>
                 <?php endif; ?>
 
-                <div class="video-wrapper">
-                    <?php the_field('featured_video'); ?>
-                </div>
+                <?php 
+                    echo str_replace('<iframe', '<iframe loading="lazy"', get_field('featured_video')); 
+                    ?>
             </div>
         </section>
     <?php endif; ?>
