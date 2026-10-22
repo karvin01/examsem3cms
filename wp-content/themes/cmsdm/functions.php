@@ -30,12 +30,12 @@ add_filter('comment_form_default_fields', 'remove_comment_website_field');
 
 function handle_contact_form_submission() {
 
-    // 1. SECURITY CHECK: Verify nonce
+    // 1. SECURITY CHECK: Verify nonce (CSRF Protection)
     if ( ! isset($_POST['contact_form_nonce']) || ! wp_verify_nonce($_POST['contact_form_nonce'], 'contact_form_action') ) {
         wp_die('Security check failed.');
     }
 
-    // 2. GET & SANITIZE INPUTS
+    // 2. GET & SANITIZE INPUTS (XSS Protection)
     $name    = isset($_POST['contact_name'])    ? trim(sanitize_text_field($_POST['contact_name'])) : '';
     $email   = isset($_POST['contact_email'])   ? trim(sanitize_email($_POST['contact_email']))     : '';
     $message = isset($_POST['contact_message']) ? trim(sanitize_textarea_field($_POST['contact_message'])) : '';

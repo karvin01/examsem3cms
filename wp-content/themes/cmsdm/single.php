@@ -1,14 +1,16 @@
 <?php get_header(); ?>
 
-<main class="site-main">
+<main id="main-content" class="site-main">
     <article class="single-post-container">
         <?php while (have_posts()) : the_post(); ?>
 
             <header class="post-header">
-                <h1 class="post-title"><?php the_title(); ?></h1>
+                <!-- Escaped title output -->
+                <h1 class="post-title"><?php echo esc_html(get_the_title()); ?></h1>
                 <div class="post-meta">
-                    <span>Published on <?php echo get_the_date(); ?></span>
-                    <span>by <?php the_author(); ?></span>
+                    <!-- esc_html() prevents any malicious script injection from date or author strings -->
+                    <span>Published on <?php echo esc_html(get_the_date()); ?></span>
+                    <span>by <?php echo esc_html(get_the_author()); ?></span>
                 </div>
             </header>
 
@@ -19,6 +21,7 @@
             <?php endif; ?>
 
             <div class="post-content">
+                <!-- the_content() runs through WordPress wp_kses_post filter automatically -->
                 <?php the_content(); ?>
             </div>
 

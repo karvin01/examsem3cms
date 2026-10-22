@@ -97,7 +97,7 @@
                 <!-- Hidden action matches your add_action name in functions.php -->
                 <input type="hidden" name="action" value="handle_contact_form">
 
-                <!-- Security nonce -->
+                <!-- Security nonce (CSRF Protection) -->
                 <?php wp_nonce_field('contact_form_action', 'contact_form_nonce'); ?>
 
                 <div class="form-group">
