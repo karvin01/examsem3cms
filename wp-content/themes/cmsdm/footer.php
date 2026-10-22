@@ -8,7 +8,7 @@
 
         <!-- second col -->
         <div class="footer-col">
-            <h4>Customer service</h4>
+            <h3>Customer service</h3>
             <ul>
                 <li><a href="<?php echo home_url('/delivery'); ?>">Delivery</a></li>
                 <li><a href="<?php echo home_url('/returns'); ?>">Returns</a></li>
@@ -17,7 +17,7 @@
 
         <!-- third col -->
         <div class="footer-col">
-            <h4>Information</h4>
+            <h3>Information</h3>
             <ul>
                 <li><a href="<?php echo home_url('/about'); ?>">About</a></li>
                 <li><a href="<?php echo home_url('/contact'); ?>">Contact</a></li>
@@ -26,7 +26,7 @@
 
         <!-- fourth col -->
         <div class="footer-col footer-socials">
-            <h4>Social media</h4>
+            <h3>Social media</h3>
             <ul>
                 <li>
                     <a href="https://instagram.com" target="_blank" rel="noopener">

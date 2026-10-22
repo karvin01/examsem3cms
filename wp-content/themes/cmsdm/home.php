@@ -10,15 +10,15 @@
                 <?php while (have_posts()) : the_post(); ?>
 
                     <article class="blog-card">
-                        <a href="<?php the_permalink(); ?>">
+                        <a href="<?php the_permalink(); ?>" aria-label="Read more about <?php the_title_attribute(); ?>">
                             <?php the_post_thumbnail('medium'); ?>
                         </a>
                         <div class="blog-card-content">
-                            <h3>
+                            <h2>
                                 <a href="<?php the_permalink(); ?>">
                                     <?php the_title(); ?>
                                 </a>
-                            </h3>
+                            </h2>
                             <div><?php the_excerpt(); ?></div>
                             <a href="<?php the_permalink(); ?>" class="read-more">Read More</a>
                         </div>
