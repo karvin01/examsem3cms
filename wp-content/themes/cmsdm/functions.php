@@ -8,8 +8,17 @@ function my_theme_setup() {
 add_action('after_setup_theme', 'my_theme_setup');
 
 function my_theme_scripts() {
-    // Enqueue your main style.css
+    // 1. Enqueue main style.css
     wp_enqueue_style('main-style', get_stylesheet_uri());
+
+    // 2. Enqueue main.js in the footer
+    wp_enqueue_script(
+        'main-script',
+        get_template_directory_uri() . '/assets/main.js',
+        array(),
+        '1.0.0',
+        true // true loads the script right before </body> so elements exist
+    );
 }
 add_action('wp_enqueue_scripts', 'my_theme_scripts');
 
@@ -21,12 +30,12 @@ add_filter('comment_form_default_fields', 'remove_comment_website_field');
 
 function handle_contact_form_submission() {
 
-    // 1. SECURITY CHECK: Verify nonce
+    // 1. SECURITY CHECK: Verify nonce (CSRF Protection)
     if ( ! isset($_POST['contact_form_nonce']) || ! wp_verify_nonce($_POST['contact_form_nonce'], 'contact_form_action') ) {
         wp_die('Security check failed.');
     }
 
-    // 2. GET & SANITIZE INPUTS
+    // 2. GET & SANITIZE INPUTS (XSS Protection)
     $name    = isset($_POST['contact_name'])    ? trim(sanitize_text_field($_POST['contact_name'])) : '';
     $email   = isset($_POST['contact_email'])   ? trim(sanitize_email($_POST['contact_email']))     : '';
     $message = isset($_POST['contact_message']) ? trim(sanitize_textarea_field($_POST['contact_message'])) : '';

@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 
-<!-- Hero Banner -->
+<main class="site-main">
+    <!-- Hero Banner -->
     <section class="sustainability-hero">
         <div class="sustainability-hero-container">
             <span class="hero-badge">Rider Longevity & Care</span>

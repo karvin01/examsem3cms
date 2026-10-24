@@ -1,7 +1,7 @@
 <!-- Blog Page - whenever there is blog post about gear or whatever, it needs the link to the shop part with this stuff-->
 <?php get_header(); ?>
 
-<main class="site-main">
+<main id="main-content" class="site-main">
     <div class="blog-container">
         <h1>Latest Articles</h1>
 
@@ -10,23 +10,24 @@
                 <?php while (have_posts()) : the_post(); ?>
 
                     <article class="blog-card">
-                        <a href="<?php the_permalink(); ?>">
+                        <!-- esc_url() sanitizes the destination link; the_title_attribute() escapes the ARIA label -->
+                        <a href="<?php echo esc_url(get_permalink()); ?>" aria-label="<?php echo esc_attr(sprintf('Read more about %s', get_the_title())); ?>">
                             <?php the_post_thumbnail('medium'); ?>
                         </a>
                         <div class="blog-card-content">
-                            <h3>
-                                <a href="<?php the_permalink(); ?>">
-                                    <?php the_title(); ?>
+                            <h2>
+                                <a href="<?php echo esc_url(get_permalink()); ?>">
+                                    <?php echo esc_html(get_the_title()); ?>
                                 </a>
-                            </h3>
+                            </h2>
                             <div><?php the_excerpt(); ?></div>
-                            <a href="<?php the_permalink(); ?>" class="read-more">Read More</a>
+                            <a href="<?php echo esc_url(get_permalink()); ?>" class="read-more">Read More</a>
                         </div>
                     </article>
 
                 <?php endwhile; ?>
             <?php else : ?>
-                <p>No posts found.</p>
+                <p><?php echo esc_html__('No posts found.', 'cmsdm'); ?></p>
             <?php endif; ?>
         </div>
     </div>

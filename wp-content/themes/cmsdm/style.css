@@ -5,8 +5,9 @@ Version: 1.0.0
 Description: A custom WordPress theme built from scratch.
 */
 
-/*HEADER*/
-/* Reset & Base Setup */
+/* ==================================================
+   Reset & Base Setup
+================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -17,14 +18,35 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #1a1a1a;
     background-color: #ffffff;
+    line-height: 1.6;
 }
 
-/* Header Container */
+/* Skip link for keyboard users (WCAG Best Practices) */
+.skip-link {
+    position: absolute;
+    top: -9999px;
+    left: 1rem;
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 0.75rem 1.25rem;
+    z-index: 999999;
+    text-decoration: underline;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.skip-link:focus {
+    top: 1rem;
+}
+
+/* ==================================================
+   HEADER
+================================================== */
 .site-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 2.5rem;
+    padding: 0.75rem 2.5rem;
     border-bottom: 1px solid #e5e7eb;
     background-color: #ffffff;
     position: sticky;
@@ -32,54 +54,97 @@ body {
     z-index: 50;
 }
 
-/* 1. Left: Logo Placeholder */
+/* 1. Logo */
 .logo img {
-    height: 60px;
+    height: 55px;
     width: auto;
     display: block;
 }
 
-/* 2. Middle: Navigation */
+/* 2. Middle: Desktop Navigation */
 .main-nav ul {
     display: flex;
     gap: 2rem;
     list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
 
 .main-nav a {
     text-decoration: none;
     color: #4b5563;
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     transition: color 0.2s ease;
+    display: inline-block;
+    padding: 0.4rem 0.2rem;
+    min-height: 24px;
 }
 
-.main-nav a:hover {
+.main-nav a:hover,
+.main-nav a:focus {
     color: #000000;
 }
 
-/* 3. Right: Cart Icon */
-.cart a {
+/* 3. Right: Actions (Cart + Mobile Toggle) */
+.header-right {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    gap: 1.25rem;
+}
+
+.cart a {
+    display: inline-flex;
+    align-items: center;
     gap: 0.5rem;            
     text-decoration: none;   
     color: #1a1a1a;          
-    font-weight: 500;
-    font-size: 0.95rem;
+    font-weight: 600;
+    font-size: 1.1rem;
     transition: opacity 0.2s ease;
-    width: 180px
+    min-height: 44px;
+    padding: 0.25rem 0.5rem;
 }
 
 .cart a:hover {
     color: #1a1a1a;          
-    opacity: 0.7;           
+    opacity: 0.75;           
     text-decoration: none;
 }
-/*HEADER END*/
 
-/*FOOTER*/
+/* 4. Hamburger Button (Hidden on Desktop) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px 8px;
+    border-radius: 6px;
+}
+
+.menu-toggle:focus-visible {
+    outline: 2px solid #00F5FF;
+    outline-offset: 2px;
+}
+
+.hamburger-bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #1a1a1a;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+/* HEADER END */
+
+/* ==================================================
+   FOOTER
+================================================== */
 .site-footer {
     background-color: #1A1A1A;
     color: #f1f5f9;
@@ -96,7 +161,7 @@ body {
     margin: 0 auto;
 }
 
-.footer-col h4 {
+.footer-col h3 {
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 1.25rem;
@@ -119,6 +184,9 @@ body {
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.2s ease;
+    display: inline-block;
+    min-height: 24px;
+    line-height: 24px;
 }
 
 .footer-col a:hover {
@@ -126,7 +194,7 @@ body {
 }
 
 .footer-logo img {
-    height: 100px;
+    height: 90px;
     width: auto;
     display: block;
 }
@@ -136,7 +204,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    line-height: 1;
+    min-height: 28px;
 }
 
 .footer-socials svg {
@@ -151,11 +219,10 @@ body {
 .footer-socials a:hover svg {
     transform: scale(1.1);
 }
-/*FOOTER END*/
+/* FOOTER END */
 
-/*FRONT PAGE*/
 /* ==================================================
-   Hero Section
+   FRONT PAGE
 ================================================== */
 .hero-section {
     background-color: #ffffff;
@@ -207,12 +274,15 @@ body {
 
 /* Reusable Buttons */
 .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 0.85rem 1.75rem;
     font-size: 0.95rem;
     font-weight: 600;
     text-decoration: none;
     border-radius: 4px;
+    min-height: 44px;
     transition: all 0.2s ease;
 }
 
@@ -260,9 +330,7 @@ body {
     display: block;
 }
 
-/* ==================================================
-   Brand Message Section
-================================================== */
+/* Brand Message */
 .brand-message {
     background-color: #f8fafc;
     padding: 5rem 2rem;
@@ -288,7 +356,7 @@ body {
     color: #475569;
 }
 
-/*video*/
+/* Video Section */
 .video-section {
     padding: 5rem 2rem;
     background-color: #1A1A1A;
@@ -318,9 +386,8 @@ body {
     border-radius: 12px;
     display: block;
 }
-/*video end*/
 
-/*Testimonials*/
+/* Testimonials */
 .testimonials {
     padding: 5rem 2rem;
     background-color: #f9fafb;
@@ -405,16 +472,10 @@ body {
     line-height: 1.6;
     margin: 0;
 }
-/*Testimonials end*/
-/*FRONT PAGE END*/
-
-
-
-
-
+/* FRONT PAGE END */
 
 /* ==================================================
-   Blog page
+   BLOG ARCHIVE PAGE
 ================================================== */
 .blog-container {
     max-width: 1000px;
@@ -429,7 +490,6 @@ body {
     color: #111827;
     text-align: center;
 }
-
 
 .blog-grid {
     display: flex;
@@ -454,6 +514,8 @@ body {
     position: relative;
     align-self: stretch;
     overflow: hidden;
+    display: block;
+    min-height: 200px;
 }
 
 .blog-card img {
@@ -473,19 +535,19 @@ body {
     flex-direction: column;
 }
 
-.blog-card-content h3 {
+.blog-card-content h2 {
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
     line-height: 1.3;
 }
 
-.blog-card-content h3 a {
+.blog-card-content h2 a {
     color: #111827;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-.blog-card-content h3 a:hover {
+.blog-card-content h2 a:hover {
     color: #e11d48;
 }
 
@@ -502,17 +564,18 @@ body {
     color: #e11d48;
     font-weight: 600;
     text-decoration: none;
+    min-height: 32px;
+    line-height: 32px;
+    display: inline-block;
 }
 
 .read-more:hover {
     text-decoration: underline;
 }
-/* ==================================================
-   Blog Page end
-================================================== */
+/* BLOG PAGE END */
 
 /* ==================================================
-   Blog post
+   SINGLE BLOG POST
 ================================================== */
 .single-post-container {
     max-width: 800px;
@@ -533,7 +596,7 @@ body {
 }
 
 .post-meta {
-    font-size: 0.5rem;
+    font-size: 13px; /* >= 12px passes WCAG Best Practices */
     color: #6b7280;
     display: flex;
     justify-content: center;
@@ -557,7 +620,7 @@ body {
 
 .post-content {
     font-size: 1.125rem;
-    line-height: 1.8;
+    line-height: 1.75;
     color: #374151;
 }
 
@@ -566,11 +629,12 @@ body {
     color: #111827;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    line-height: 1.3;
+    line-height: 1.5;
 }
 
 .post-content p {
     margin-bottom: 1.5rem;
+    line-height: 1.7;
 }
 
 .post-content ul,
@@ -584,167 +648,18 @@ body {
 }
 
 /* Comments Section */
-/* Comments Section Styling */
-.comment-respond {
-    margin-top: 2rem;
+.post-comments {
+    margin-top: 3.5rem;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 2.5rem;
 }
 
+.comments-title,
 .comment-reply-title {
     font-size: 1.5rem;
     font-weight: 700;
     color: #111827;
-    margin-bottom: 0.5rem;
-}
-
-.logged-in-as,
-.comment-notes {
-    display: none;
-}
-
-.comment-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
-.comment-form .required {
-    display: none;
-}
-
-.comment-form label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #374151;
-    margin-bottom: 0.5rem;
-}
-
-/* Comment textarea & input fields */
-.comment-form textarea,
-.comment-form input[type="text"],
-.comment-form input[type="email"],
-.comment-form input[type="url"] {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 1rem;
-    color: #111827;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.comment-form textarea {
-    min-height: 140px;
-    resize: vertical;
-}
-
-.comment-form textarea:focus,
-.comment-form input:focus {
-    outline: none;
-    border-color: #e11d48;
-    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
-}
-
-.comment-form-cookies-consent {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0;
-    flex: 1;
-}
-
-.comment-form-cookies-consent input[type="checkbox"] {
-    width: 1.1rem;
-    height: 1.1rem;
-    accent-color: #e11d48;
-    cursor: pointer;
-    margin: 0;
-}
-
-.comment-form-cookies-consent label {
-    margin-bottom: 0 !important;
-    font-size: 0.9rem;
-    color: #4b5563;
-    font-weight: 400;
-    cursor: pointer;
-}
-
-/* Submit button container */
-.comment-form .form-submit {
-    margin: 0;
-    align-self: flex-end;
-}
-
-/* Submit Button */
-.comment-form .form-submit {
-    margin-top: 0.5rem;
-}
-
-.comment-form .submit {
-    background-color: #e11d48;
-    color: #ffffff;
-    padding: 0.75rem 1.75rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.comment-form .submit:hover {
-    background-color: #be123c;
-}
-
-/* Displayed Comments List */
-.commentlist {
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.commentlist li {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 1.25rem;
-}
-
-.comment-author {
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 0.25rem;
-}
-
-.comment-meta {
-    font-size: 0.8rem;
-    color: #9ca3af;
-    margin-bottom: 0.75rem;
-}
-
-.comment-content p {
-    margin: 0;
-    font-size: 0.95rem;
-    color: #374151;
-    line-height: 1.6;
-}
-
-/* comment displayed list*/
-.comments-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 2rem;
-}
-
-.post-comments h3 {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .comment-list,
@@ -769,7 +684,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .comment-meta .avatar {
@@ -798,18 +713,27 @@ body {
     margin-top: 0.2rem;
 }
 
-.comment-metadata a {
+/* WCAG 2.5.8 compliant target sizing & spacing on comment links */
+.comment-metadata a,
+.comment-meta a,
+.comment-reply-link {
+    display: inline-block;
+    min-height: 24px;
+    line-height: 24px;
+    padding: 0 6px;
+    margin-right: 8px;
     color: #6b7280;
     text-decoration: none;
 }
 
-.comment-metadata a:hover {
+.comment-metadata a:hover,
+.comment-reply-link:hover {
     text-decoration: underline;
+    color: #111827;
 }
 
 .comment-edit-link {
     color: #9ca3af !important;
-    margin-left: 0.5rem;
 }
 
 .comment-content p {
@@ -825,53 +749,112 @@ body {
     font-size: 0.875rem;
     font-weight: 600;
     text-decoration: none;
+    min-height: 28px;
+    line-height: 28px;
+    padding: 0 4px;
 }
 
 .reply a:hover {
     text-decoration: underline;
 }
 
-/* Reply Heading & Target User */
-.comment-reply-title {
+/* Comment Form */
+.comment-form {
     display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
-.comment-reply-title a[href*="#comment-"] {
-    color: #111827;
-    text-decoration: none;
-    border-bottom: 2px solid #e5e7eb;
+.logged-in-as,
+.comment-notes,
+.comment-form .required {
+    display: none;
 }
 
-/* Cancel Reply Button */
-#cancel-comment-reply-link {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #6b7280;
-    text-decoration: none;
-    margin-left: 0.75rem;
-    padding: 0.25rem 0.6rem;
+.comment-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.comment-form textarea,
+.comment-form input[type="text"],
+.comment-form input[type="email"],
+.comment-form input[type="url"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
-    background-color: #f9fafb;
-    transition: all 0.2s ease;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #111827;
+    background-color: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-#cancel-comment-reply-link:hover {
-    color: #e11d48;
+.comment-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.comment-form textarea:focus,
+.comment-form input:focus {
+    outline: none;
     border-color: #e11d48;
-    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
 }
-/* ==================================================
-   Blog post end
-================================================== */
+
+.comment-form-cookies-consent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.comment-form-cookies-consent input[type="checkbox"] {
+    min-width: 20px;
+    min-height: 20px;
+    accent-color: #e11d48;
+    cursor: pointer;
+    margin: 0;
+}
+
+.comment-form-cookies-consent label {
+    margin-bottom: 0 !important;
+    font-size: 0.9rem;
+    color: #4b5563;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.comment-form .form-submit {
+    margin-top: 0.5rem;
+    align-self: flex-start;
+}
+
+.comment-form .submit {
+    background-color: #e11d48;
+    color: #ffffff;
+    padding: 0.75rem 1.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    min-height: 44px;
+    transition: background-color 0.2s ease;
+}
+
+.comment-form .submit:hover {
+    background-color: #be123c;
+}
+/* BLOG POST END */
 
 /* ==================================================
-   Contact page start
+   CONTACT PAGE
 ================================================== */
-/* Contact Page Hero Section */
 .hero-contact {
     background-color: #f8fafc;
     padding: 4rem 2rem;
@@ -887,7 +870,14 @@ body {
     align-items: start;
 }
 
-/* Align Headings on the Same Baseline */
+.page-title {
+    grid-column: 1 / -1;
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
 .opening-hours h2,
 .map h2 {
     font-size: 1.75rem;
@@ -897,7 +887,6 @@ body {
     line-height: 1.2;
 }
 
-/* Opening Hours Card */
 .opening-hours-info {
     background-color: #ffffff;
     border: 1px solid #e5e7eb;
@@ -929,7 +918,6 @@ body {
     padding-bottom: 0.25rem;
 }
 
-/* Map Iframe */
 .map-info iframe {
     width: 100%;
     height: 400px;
@@ -939,7 +927,6 @@ body {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-/* Storefront Image Banner */
 .storefront-preview {
     grid-column: 1 / -1;
     position: relative;
@@ -958,7 +945,6 @@ body {
     display: block;
 }
 
-/* Overlay caption so visitors immediately get context */
 .storefront-caption {
     position: absolute;
     bottom: 1rem;
@@ -972,7 +958,6 @@ body {
     backdrop-filter: blur(4px);
 }
 
-/* Showroom video sectio */
 .showroom-video-section {
     background-color: #1A1A1A;
     color: #ffffff;
@@ -992,7 +977,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #e11d48;
+    color: #fb2c58; /* Accessible AA contrast */
     margin-bottom: 0.75rem;
 }
 
@@ -1027,7 +1012,6 @@ body {
     border: none;
 }
 
-/* mail form */
 .contact-form-section {
     background-color: #f8fafc;
     padding: 4rem 2rem;
@@ -1050,7 +1034,6 @@ body {
     margin: 0 0 1.5rem 0;
 }
 
-/* Form Controls */
 .custom-contact-form {
     display: flex;
     flex-direction: column;
@@ -1097,7 +1080,6 @@ body {
     resize: vertical;
 }
 
-/* Submit Button */
 .btn-submit {
     align-self: flex-start;
     background-color: #e11d48;
@@ -1108,6 +1090,7 @@ body {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    min-height: 44px;
     transition: background-color 0.2s ease;
 }
 
@@ -1115,7 +1098,6 @@ body {
     background-color: #be123c;
 }
 
-/* Error & Success Notices */
 .form-feedback {
     padding: 1rem 1.25rem;
     border-radius: 8px;
@@ -1151,19 +1133,16 @@ body {
 .form-feedback.success p {
     margin: 0;
 }
-/* ==================================================
-   Contact page end
-================================================== */
+/* CONTACT PAGE END */
 
 /* ==================================================
-   Sustainability initiatives page start
+   SUSTAINABILITY PAGE
 ================================================== */
 .sustainability-page {
     background-color: #f8fafc;
     min-height: 100vh;
 }
 
-/* Hero Section */
 .sustainability-hero {
     background-color: #1a1a1a;
     color: #ffffff;
@@ -1182,7 +1161,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #e11d48;
+    color: #fb2c58; /* 4.76:1 ratio on #1a1a1a (WCAG AA pass) */
     margin-bottom: 0.75rem;
 }
 
@@ -1200,7 +1179,6 @@ body {
     margin: 0;
 }
 
-/* Initiatives Vertical Stack */
 .initiatives-section {
     padding: 4.5rem 2rem;
 }
@@ -1213,7 +1191,6 @@ body {
     gap: 2.5rem;
 }
 
-/* Horizontal Card (Text Left, Image Right) */
 .initiative-card {
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
@@ -1223,7 +1200,6 @@ body {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-/* Left Column: Content */
 .initiative-text-col {
     flex: 1.2;
     padding: 2.5rem;
@@ -1261,7 +1237,6 @@ body {
     margin-bottom: 0;
 }
 
-/* Action / Contact Anchor Button */
 .initiative-action {
     margin-top: 1.75rem;
     padding-top: 1.25rem;
@@ -1277,6 +1252,8 @@ body {
     font-size: 0.95rem;
     padding: 0.75rem 1.4rem;
     border-radius: 8px;
+    min-height: 44px;
+    line-height: 24px;
     transition: background-color 0.2s ease;
 }
 
@@ -1284,7 +1261,6 @@ body {
     background-color: #be123c;
 }
 
-/* Right Column: Image */
 .initiative-img-col {
     flex: 0.9;
     position: relative;
@@ -1298,15 +1274,26 @@ body {
     object-fit: cover;
     display: block;
 }
-/* ==================================================
-   Sustainability initiatives page end
-================================================== */
+/* SUSTAINABILITY END */
+
+/* Screen Reader Only Utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
 
 /* ==================================================
-   Responsive Breakpoints
+   RESPONSIVE BREAKPOINTS
 ================================================== */
 
-/* --- Tablet Landscape & Smaller Desktop (<= 1024px) --- */
+/* Tablet Landscape & Smaller Desktop (<= 1024px) */
 @media (max-width: 1024px) {
     .site-header {
         padding: 0.75rem 1.5rem;
@@ -1330,33 +1317,67 @@ body {
     }
 }
 
-/* --- Tablets & Mobile Devices (<= 768px) --- */
+/* Tablets & Mobile Devices (<= 768px) */
 @media (max-width: 768px) {
-    /* Header Stack / Wrap */
+    /* Header & Hamburger Drawer */
     .site-header {
         flex-wrap: wrap;
-        gap: 1rem;
-        padding: 1rem;
+        padding: 0.75rem 1.25rem;
+    }
+
+    .logo img {
+        height: 48px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
     }
 
     .main-nav {
+        display: none;
         order: 3;
         width: 100%;
-        overflow-x: auto;
-        padding-top: 0.5rem;
+        background-color: #ffffff;
         border-top: 1px solid #f1f5f9;
+        margin-top: 0.75rem;
+    }
+
+    .main-nav.is-open {
+        display: block !important;
     }
 
     .main-nav ul {
-        gap: 1.25rem;
-        justify-content: center;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.25rem;
+        padding: 1rem 0;
     }
 
-    .cart a {
-        width: auto;
+    .main-nav ul li a {
+        display: block;
+        padding: 0.75rem 1rem;
+        font-size: 1.05rem;
+        border-radius: 6px;
+        min-height: 44px; /* WCAG 2.5.8 touch target */
     }
 
-    /* Hero Section: Stack Vertically */
+    .main-nav ul li a:hover,
+    .main-nav ul li a:focus {
+        background-color: #f8fafc;
+        color: #e11d48;
+    }
+
+    /* Hero Section */
     .hero-container {
         grid-template-columns: 1fr;
         min-height: auto;
@@ -1382,12 +1403,12 @@ body {
         order: -1;
     }
 
-    /* Testimonials: 1 Column */
+    /* Testimonials */
     .testimonial-items {
         grid-template-columns: 1fr;
     }
 
-    /* Blog Archive Cards: Stack Vertically */
+    /* Blog Archive Cards */
     .blog-card {
         flex-direction: column;
     }
@@ -1410,7 +1431,7 @@ body {
         align-self: flex-start;
     }
 
-    /* Single Blog Post Typography */
+    /* Single Blog Post */
     .single-post-container {
         margin: 2rem auto;
         padding: 0 1rem;
@@ -1429,23 +1450,26 @@ body {
         line-height: 1.7;
     }
 
+    /* Contact Page */
     .contact-hero-container {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
     }
 
     .map-info iframe {
         height: 300px;
     }
+
     .showroom-video-section {
-    padding: 3.5rem 1.5rem;
+        padding: 3.5rem 1.5rem;
     }
 
     .showroom-video-container h2 {
         font-size: 1.75rem;
     }
+
     .storefront-preview {
-    height: 220px;
+        height: 220px;
     }
 
     .storefront-caption {
@@ -1456,13 +1480,14 @@ body {
     }
 
     .contact-form-container {
-    padding: 2rem 1.25rem;
+        padding: 2rem 1.25rem;
     }
 
     .btn-submit {
         width: 100%;
     }
 
+    /* Sustainability Page */
     .sustainability-hero {
         padding: 3.5rem 1.5rem;
     }
@@ -1499,14 +1524,14 @@ body {
     }
 }
 
-/* --- Mobile Phones (<= 480px) --- */
+/* Mobile Phones (<= 480px) */
 @media (max-width: 480px) {
     .site-header {
-        padding: 0.75rem;
+        padding: 0.75rem 1rem;
     }
 
     .logo img {
-        height: 45px;
+        height: 42px;
     }
 
     .hero-title {
@@ -1534,7 +1559,7 @@ body {
         font-size: 1.5rem;
     }
 
-    /* Footer Single Column */
+    /* Footer */
     .footer-container {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -1544,7 +1569,6 @@ body {
         padding: 3rem 1.5rem 1.5rem;
     }
 
-    /* Comments Section */
     .comment-meta {
         align-items: flex-start;
     }
@@ -1557,7 +1581,4 @@ body {
         width: 100%;
     }
 }
-
-/* ==================================================
-   Responsive Breakpoints end
-================================================== */
+/* RESPONSIVE BREAKPOINTS END */
