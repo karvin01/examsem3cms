@@ -1,8 +1,0 @@
-/* Switch component styles. */
-[data-state="checked"].switch-root {
-	background-color: var(--color-primary) !important;
-}
-
-.switch-root[data-state="checked"] {
-	background-color: var(--color-primary) !important;
-}

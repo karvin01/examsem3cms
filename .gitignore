@@ -1,15 +1,33 @@
-# Ignore everything
+# Ignore everything in the root
 /*
 
-# But do not ignore the .gitignore file itself
+# Allow git configs & CI/CD
 !.gitignore
 !.github/
 !.github/*.*
 
-# Do not ignore wp-content and everything inside it
+# Allow wp-content container
 !wp-content/
-!wp-content/themes/**/*
 
+# Only track your custom theme folder
+!wp-content/themes/
+!wp-content/themes/cmsdm/
+!wp-content/themes/cmsdm/**
+
+# Ignore default WordPress themes
 wp-content/themes/twenty*/**
 wp-content/themes/index.php
 wp-content/plugins/index.php
+
+# ==================================================
+# Exclude Plugin Dumps, Wordfence & Updraft Data
+# ==================================================
+wp-content/plugins/
+wp-content/wflogs/
+wp-content/updraft/
+wp-content/cache/
+wp-content/wpo-cache/
+wp-content/uploads/
+*.log
+wordfence-waf.php
+.user.ini
