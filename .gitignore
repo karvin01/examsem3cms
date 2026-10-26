@@ -31,3 +31,7 @@ wp-content/uploads/
 *.log
 wordfence-waf.php
 .user.ini
+
+# WooCommerce Generated Data
+wp-content/uploads/woocommerce_uploads/
+wp-content/wc-logs/

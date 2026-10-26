@@ -104,3 +104,197 @@ function handle_contact_form_submission() {
     // Hook for logged-in and logged-out visitors
     add_action('admin_post_handle_contact_form', 'handle_contact_form_submission');
     add_action('admin_post_nopriv_handle_contact_form', 'handle_contact_form_submission');
+
+
+    // WooCommerce theme support
+function cmsdm_add_woocommerce_support() {
+    add_theme_support('woocommerce');
+    add_theme_support('wc-product-gallery-zoom');
+    add_theme_support('wc-product-gallery-lightbox');
+    add_theme_support('wc-product-gallery-slider');
+}
+add_action('after_setup_theme', 'cmsdm_add_woocommerce_support');
+
+
+//=================================//
+// Shop page filters
+//=================================//
+// Add A-Z and Z-A options to the sorting dropdown
+add_filter( 'woocommerce_catalog_orderby', function( $options ) {
+    // 1. Remove unwanted default sorting options
+    unset( $options['popularity'] );
+    unset( $options['rating'] );
+
+    $options['title_asc']  = __( 'Name: A to Z', 'woocommerce' );
+    $options['title_desc'] = __( 'Name: Z to A', 'woocommerce' );
+    return $options;
+});
+
+// Handle the orderby query for title sorting
+add_filter( 'woocommerce_get_catalog_ordering_args', function( $args ) {
+    $orderby_value = isset( $_GET['orderby'] ) ? wc_clean( (string) wp_unslash( $_GET['orderby'] ) ) : wc_clean( get_option( 'woocommerce_default_catalog_orderby' ) );
+
+    if ( 'title_asc' === $orderby_value ) {
+        $args['orderby'] = 'title';
+        $args['order']   = 'ASC';
+    } elseif ( 'title_desc' === $orderby_value ) {
+        $args['orderby'] = 'title';
+        $args['order']   = 'DESC';
+    }
+
+    return $args;
+});
+
+// Filter for different categories
+function cmsdm_widgets_init() {
+    register_sidebar( array(
+        'name'          => __( 'Shop Sidebar', 'cmsdm' ),
+        'id'            => 'shop-sidebar',
+        'description'   => __( 'Widgets in this area will be shown on shop and product archive pages.', 'cmsdm' ),
+        'before_widget' => '<section id="%1$s" class="widget %2$s shop-widget">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'cmsdm_widgets_init' );
+
+// Remove count numbers from product category lists
+add_filter( 'woocommerce_product_categories_widget_args', function( $args ) {
+    $args['show_count'] = 0;
+    return $args;
+} );
+
+add_filter( 'wp_list_categories_args', function( $args ) {
+    if ( isset( $args['taxonomy'] ) && 'product_cat' === $args['taxonomy'] ) {
+        $args['show_count'] = 0;
+    }
+    return $args;
+} );
+
+// Hard hidden numbers displaying behind the categories in shop
+// Strip out all "(X)" count strings from the rendered category HTML
+add_filter( 'wp_list_categories', function( $output, $args ) {
+    // Only target product categories or if no taxonomy is explicitly specified
+    if ( ! isset( $args['taxonomy'] ) || 'product_cat' === $args['taxonomy'] ) {
+        // Removes any space or no-space followed by (digits)
+        $output = preg_replace( '/\s*\(\d+\)/', '', $output );
+    }
+    return $output;
+}, 99, 2 );
+
+//fix for ARIAL issue in siteimprove addon
+// Remove prohibited aria-label from pagination span
+add_filter( 'woocommerce_pagination_args', function( $args ) {
+    return $args;
+});
+
+add_filter( 'paginate_links_output', function( $html ) {
+    // Strips aria-label from any <span ...> tag in pagination
+    return preg_replace( '/(<span[^>]*?)\saria-label="[^"]*"([^>]*?>)/i', '$1$2', $html );
+}, 20 );
+
+//=================================//
+// Test drive page logic
+//=================================//
+/**
+ * Handle Test Ride Booking Submission & Mailpit Routing
+ */
+function cmsdm_handle_test_ride() {
+    // 1. Verify CSRF Nonce
+    if ( ! isset($_POST['test_ride_nonce']) || ! wp_verify_nonce( $_POST['test_ride_nonce'], 'test_ride_verify' ) ) {
+        wp_die( esc_html__( 'Security check failed. Please refresh and try again.', 'cmsdm' ), 403 );
+    }
+
+    // 2. Validate Required Fields
+    $required = array( 'motorcycle_model', 'license_type', 'ride_date', 'ride_time', 'rider_name', 'rider_email', 'rider_phone', 'terms_agree' );
+    foreach ( $required as $field ) {
+        if ( empty( $_POST[$field] ) ) {
+            wp_safe_redirect( add_query_arg( 'booking', 'error', wp_get_referer() ) );
+            exit;
+        }
+    }
+
+    // 3. Sanitize Inputs
+    $model      = sanitize_text_field( $_POST['motorcycle_model'] );
+    $license    = sanitize_text_field( $_POST['license_type'] );
+    $experience = sanitize_text_field( $_POST['experience_level'] ?? 'Not specified' );
+    $date       = sanitize_text_field( $_POST['ride_date'] );
+    $time       = sanitize_text_field( $_POST['ride_time'] );
+    $loaner     = isset( $_POST['loaner_gear'] ) ? 'Yes' : 'No';
+    $name       = sanitize_text_field( $_POST['rider_name'] );
+    $email      = sanitize_email( $_POST['rider_email'] );
+    $phone      = sanitize_text_field( $_POST['rider_phone'] );
+    $notes      = sanitize_textarea_field( $_POST['rider_notes'] ?? '' );
+
+    // 4. Send Email Notification to Store Admin (Caught by Mailpit in Local)
+    $admin_email   = get_option( 'admin_email' );
+    $admin_subject = sprintf( 'New Test Ride Booking: %s - %s', $name, $model );
+    $admin_body    = "You received a new test ride booking request:\n\n"
+                   . "Rider: {$name}\n"
+                   . "Email: {$email}\n"
+                   . "Phone: {$phone}\n\n"
+                   . "Motorcycle: {$model}\n"
+                   . "License: {$license}\n"
+                   . "Experience: {$experience}\n"
+                   . "Scheduled Slot: {$date} at {$time}\n"
+                   . "Loaner Gear Needed: {$loaner}\n\n"
+                   . "Special Notes:\n{$notes}\n";
+
+    $admin_headers = array(
+        'Content-Type: text/plain; charset=UTF-8',
+        "Reply-To: {$name} <{$email}>"
+    );
+
+    wp_mail( $admin_email, $admin_subject, $admin_body, $admin_headers );
+
+    // 5. Send Customer Confirmation Email (Also lands in Mailpit)
+    $customer_subject = "Test Ride Request Received - {$model}";
+    $customer_body    = "Hi {$name},\n\n"
+                      . "Thanks for scheduling a test ride with us!\n\n"
+                      . "Booking Details:\n"
+                      . "- Motorcycle: {$model}\n"
+                      . "- Date & Time: {$date} at {$time}\n"
+                      . "- Loaner Gear: {$loaner}\n\n"
+                      . "Please bring your valid driver's license ({$license}) when arriving at the showroom.\n\n"
+                      . "Best regards,\nMotoShop Team";
+
+    wp_mail( $email, $customer_subject, $customer_body, array( 'Content-Type: text/plain; charset=UTF-8' ) );
+
+    // 6. Redirect back with success message
+    wp_safe_redirect( add_query_arg( 'booking', 'success', wp_get_referer() ) );
+    exit;
+}
+add_action( 'admin_post_nopriv_submit_test_ride', 'cmsdm_handle_test_ride' );
+add_action( 'admin_post_submit_test_ride', 'cmsdm_handle_test_ride' );
+
+
+//styling of the payment method at the bottom of checkout
+// 1. Force Stripe Checkout Blocks to use labels 'above' and balanced input padding
+add_filter( 'wc_stripe_upe_params', function( $stripe_params ) {
+    $stripe_style = (object) [
+        'labels' => 'above',
+        'rules'  => (object) [
+            '.Input' => (object) [
+                'padding' => '12px 14px',
+            ],
+            '.Label' => (object) [
+                'fontWeight'   => '600',
+                'color'        => '#475569',
+                'marginBottom' => '6px',
+            ],
+        ],
+    ];
+
+    // Applies to WooCommerce Checkout Blocks
+    $stripe_params['blocksAppearance'] = $stripe_style;
+
+    // Applies to classic checkout shortcode fallback
+    $stripe_params['appearance'] = $stripe_style;
+
+    return $stripe_params;
+} );
+
+// 2. Clear the cached Stripe appearance transients so changes load immediately
+delete_transient( 'wc_stripe_appearance' );
+delete_transient( 'wc_stripe_blocks_appearance' );
