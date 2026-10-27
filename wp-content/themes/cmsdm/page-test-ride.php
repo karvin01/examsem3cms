@@ -3,7 +3,13 @@
  * Template Name: Test Ride Dialogue Form
  * Description: Multi-step interactive motorcycle test ride booking form.
  */
-get_header(); ?>
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
+get_header(); 
+?>
 
 <main id="main-content" class="site-main test-ride-page">
     <div class="test-ride-container">
@@ -42,6 +48,12 @@ get_header(); ?>
             
             <input type="hidden" name="action" value="submit_test_ride">
             <?php wp_nonce_field( 'test_ride_verify', 'test_ride_nonce' ); ?>
+
+            <!-- Anti-Spam Honeypot -->
+            <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+                <label for="test_ride_honeypot">Do not fill this field</label>
+                <input type="text" name="test_ride_honeypot" id="test_ride_honeypot" tabindex="-1" autocomplete="off">
+            </div>
 
             <!-- STEP 1: Bike & License -->
             <fieldset class="form-step active" data-step="1">
@@ -90,7 +102,7 @@ get_header(); ?>
 
                 <div class="form-group">
                     <label for="ride_date">Preferred Date <span class="required">*</span></label>
-                    <input type="date" id="ride_date" name="ride_date" min="<?php echo esc_attr( date('Y-m-d') ); ?>" required>
+                    <input type="date" id="ride_date" name="ride_date" min="<?php echo esc_attr( wp_date('Y-m-d') ); ?>" required>
                 </div>
 
                 <div class="form-group">

@@ -1,7 +1,13 @@
-<?php get_header(); ?>
+<?php
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+get_header(); 
+?>
 
 <main id="main-content" class="site-main">
-    <article class="single-post-container">
+    <article <?php post_class('single-post-container'); ?>>
         <?php while (have_posts()) : the_post(); ?>
 
             <header class="post-header">

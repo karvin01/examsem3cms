@@ -1,4 +1,14 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template Name: Sustainability Page
+ */
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
+get_header(); 
+?>
 
 <main class="site-main">
     <!-- Hero Banner -->
@@ -30,7 +40,7 @@
                     </div>
                 </div>
                 <div class="initiative-img-col">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/airbag-service.jpg" alt="Motorcycle Airbag Vest Canister Service">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/airbag-service.jpg'); ?>" alt="Motorcycle Airbag Vest Canister Service" loading="lazy" decoding="async">
                 </div>
             </article>
 
@@ -50,7 +60,7 @@
                     </div>
                 </div>
                 <div class="initiative-img-col">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gear-repair.jpg" alt="Leather suit and textile stitching repair">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/gear-repair.jpg'); ?>" alt="Leather suit and textile stitching repair" loading="lazy" decoding="async">
                 </div>
             </article>
 
@@ -70,7 +80,7 @@
                     </div>
                 </div>
                 <div class="initiative-img-col">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/helmet-refresh.jpg" alt="Motorcycle helmet visor and cheek pads replacement">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/helmet-refresh.jpg'); ?>" alt="Motorcycle helmet visor and cheek pads replacement" loading="lazy" decoding="async">
                 </div>
             </article>
 
@@ -90,7 +100,7 @@
                     </div>
                 </div>
                 <div class="initiative-img-col">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/boot-service.jpg" alt="Motorcycle boot resoling and buckle replacement">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/boot-service.jpg'); ?>" alt="Motorcycle boot resoling and buckle replacement" loading="lazy" decoding="async">
                 </div>
             </article>
 

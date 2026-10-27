@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 function my_theme_setup() {
     // Automatically add site title to <head>
     add_theme_support('title-tag');
@@ -35,7 +39,12 @@ function handle_contact_form_submission() {
         wp_die('Security check failed.');
     }
 
-    // 2. GET & SANITIZE INPUTS (XSS Protection)
+    // 2. BOT HONEYPOT TRAP
+    if ( ! empty($_POST['contact_honeypot']) ) {
+        wp_die(); // Drop automated bots without sending email
+    }
+
+    // 3. GET & SANITIZE INPUTS (XSS Protection)
     $name    = isset($_POST['contact_name'])    ? trim(sanitize_text_field($_POST['contact_name'])) : '';
     $email   = isset($_POST['contact_email'])   ? trim(sanitize_email($_POST['contact_email']))     : '';
     $message = isset($_POST['contact_message']) ? trim(sanitize_textarea_field($_POST['contact_message'])) : '';
@@ -43,7 +52,7 @@ function handle_contact_form_submission() {
 
     $errors = array();
 
-    // 3. VALIDATION CHECKS
+    // 4. VALIDATION CHECKS
     if ( empty($name) ) {
         $errors[] = 'Full name is required.';
     } elseif ( strlen($name) < 4 ) {
@@ -66,17 +75,17 @@ function handle_contact_form_submission() {
         $errors[] = 'Message must be at least 10 characters long.';
     }
 
-    // 4. STOP & REDIRECT IF ERRORS EXIST
+    // 5. STOP & REDIRECT IF ERRORS EXIST
     if ( ! empty($errors) ) {
         set_transient('contact_form_errors', $errors, 60);
 
-        // anchor so it doesnt scroll up
+        // Safe redirect back to form anchor
         $redirect_url = wp_get_referer() ? wp_get_referer() : home_url('/contact');
-        wp_redirect( $redirect_url . '#contact-form-section');
+        wp_safe_redirect( $redirect_url . '#contact-form-section');
         exit;
     }
 
-    // 5. SEND EMAIL TO ADMIN (Appears in Mailpit)
+    // 6. SEND EMAIL TO ADMIN (Appears in Mailpit)
     $to      = get_option('admin_email');
     $mail_subj = 'Contact Form: ' . $subject;
     $body    = "You received a new message from the contact form:\n\n";
@@ -92,21 +101,20 @@ function handle_contact_form_submission() {
 
     wp_mail($to, $mail_subj, $body, $headers);
 
-    // 6. REDIRECT WITH SUCCESS MESSAGE
+    // 7. REDIRECT WITH SUCCESS MESSAGE
     set_transient('contact_form_success', 'Thank you! Your message has been sent.', 60);
     
-    // anchor so it doesnt scroll up
     $redirect_url = wp_get_referer() ? wp_get_referer() : home_url('/contact');
-    wp_redirect( $redirect_url . '#contact-form-section');
+    wp_safe_redirect( $redirect_url . '#contact-form-section');
     exit;
 }
 
-    // Hook for logged-in and logged-out visitors
-    add_action('admin_post_handle_contact_form', 'handle_contact_form_submission');
-    add_action('admin_post_nopriv_handle_contact_form', 'handle_contact_form_submission');
+// Hook for logged-in and logged-out visitors
+add_action('admin_post_handle_contact_form', 'handle_contact_form_submission');
+add_action('admin_post_nopriv_handle_contact_form', 'handle_contact_form_submission');
 
 
-    // WooCommerce theme support
+// WooCommerce theme support
 function cmsdm_add_woocommerce_support() {
     add_theme_support('woocommerce');
     add_theme_support('wc-product-gallery-zoom');
@@ -121,7 +129,6 @@ add_action('after_setup_theme', 'cmsdm_add_woocommerce_support');
 //=================================//
 // Add A-Z and Z-A options to the sorting dropdown
 add_filter( 'woocommerce_catalog_orderby', function( $options ) {
-    // 1. Remove unwanted default sorting options
     unset( $options['popularity'] );
     unset( $options['rating'] );
 
@@ -172,25 +179,20 @@ add_filter( 'wp_list_categories_args', function( $args ) {
     return $args;
 } );
 
-// Hard hidden numbers displaying behind the categories in shop
 // Strip out all "(X)" count strings from the rendered category HTML
 add_filter( 'wp_list_categories', function( $output, $args ) {
-    // Only target product categories or if no taxonomy is explicitly specified
     if ( ! isset( $args['taxonomy'] ) || 'product_cat' === $args['taxonomy'] ) {
-        // Removes any space or no-space followed by (digits)
         $output = preg_replace( '/\s*\(\d+\)/', '', $output );
     }
     return $output;
 }, 99, 2 );
 
-//fix for ARIAL issue in siteimprove addon
-// Remove prohibited aria-label from pagination span
+// Fix for ARIA issue in siteimprove addon
 add_filter( 'woocommerce_pagination_args', function( $args ) {
     return $args;
 });
 
 add_filter( 'paginate_links_output', function( $html ) {
-    // Strips aria-label from any <span ...> tag in pagination
     return preg_replace( '/(<span[^>]*?)\saria-label="[^"]*"([^>]*?>)/i', '$1$2', $html );
 }, 20 );
 
@@ -206,7 +208,12 @@ function cmsdm_handle_test_ride() {
         wp_die( esc_html__( 'Security check failed. Please refresh and try again.', 'cmsdm' ), 403 );
     }
 
-    // 2. Validate Required Fields
+    // 2. BOT HONEYPOT TRAP
+    if ( ! empty($_POST['test_ride_honeypot']) ) {
+        wp_die();
+    }
+
+    // 3. Validate Required Fields
     $required = array( 'motorcycle_model', 'license_type', 'ride_date', 'ride_time', 'rider_name', 'rider_email', 'rider_phone', 'terms_agree' );
     foreach ( $required as $field ) {
         if ( empty( $_POST[$field] ) ) {
@@ -215,7 +222,7 @@ function cmsdm_handle_test_ride() {
         }
     }
 
-    // 3. Sanitize Inputs
+    // 4. Sanitize Inputs
     $model      = sanitize_text_field( $_POST['motorcycle_model'] );
     $license    = sanitize_text_field( $_POST['license_type'] );
     $experience = sanitize_text_field( $_POST['experience_level'] ?? 'Not specified' );
@@ -227,7 +234,7 @@ function cmsdm_handle_test_ride() {
     $phone      = sanitize_text_field( $_POST['rider_phone'] );
     $notes      = sanitize_textarea_field( $_POST['rider_notes'] ?? '' );
 
-    // 4. Send Email Notification to Store Admin (Caught by Mailpit in Local)
+    // 5. Send Email Notification to Store Admin
     $admin_email   = get_option( 'admin_email' );
     $admin_subject = sprintf( 'New Test Ride Booking: %s - %s', $name, $model );
     $admin_body    = "You received a new test ride booking request:\n\n"
@@ -248,7 +255,7 @@ function cmsdm_handle_test_ride() {
 
     wp_mail( $admin_email, $admin_subject, $admin_body, $admin_headers );
 
-    // 5. Send Customer Confirmation Email (Also lands in Mailpit)
+    // 6. Send Customer Confirmation Email
     $customer_subject = "Test Ride Request Received - {$model}";
     $customer_body    = "Hi {$name},\n\n"
                       . "Thanks for scheduling a test ride with us!\n\n"
@@ -261,7 +268,7 @@ function cmsdm_handle_test_ride() {
 
     wp_mail( $email, $customer_subject, $customer_body, array( 'Content-Type: text/plain; charset=UTF-8' ) );
 
-    // 6. Redirect back with success message
+    // 7. Redirect back with success message
     wp_safe_redirect( add_query_arg( 'booking', 'success', wp_get_referer() ) );
     exit;
 }
@@ -269,8 +276,9 @@ add_action( 'admin_post_nopriv_submit_test_ride', 'cmsdm_handle_test_ride' );
 add_action( 'admin_post_submit_test_ride', 'cmsdm_handle_test_ride' );
 
 
-//styling of the payment method at the bottom of checkout
-// 1. Force Stripe Checkout Blocks to use labels 'above' and balanced input padding
+//=================================//
+// Stripe Styling Filter
+//=================================//
 add_filter( 'wc_stripe_upe_params', function( $stripe_params ) {
     $stripe_style = (object) [
         'labels' => 'above',
@@ -286,15 +294,12 @@ add_filter( 'wc_stripe_upe_params', function( $stripe_params ) {
         ],
     ];
 
-    // Applies to WooCommerce Checkout Blocks
     $stripe_params['blocksAppearance'] = $stripe_style;
-
-    // Applies to classic checkout shortcode fallback
     $stripe_params['appearance'] = $stripe_style;
 
     return $stripe_params;
 } );
 
-// 2. Clear the cached Stripe appearance transients so changes load immediately
+// Clear the cached Stripe appearance transients so changes load immediately
 delete_transient( 'wc_stripe_appearance' );
 delete_transient( 'wc_stripe_blocks_appearance' );

@@ -1,3 +1,11 @@
+<?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
+$account_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : home_url('/my-account');
+$cart_url    = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart');
+?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -11,30 +19,28 @@
 
 <header class="site-header">
     <div class="logo">
-        <a href="<?php echo home_url(); ?>">
-            <!-- Logo Image -->
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/LogoMotoshopHeader1.png" alt="Motoshop Logo">
+        <a href="<?php echo esc_url(home_url('/')); ?>">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/LogoMotoshopHeader1.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?> Logo">
         </a>
     </div>
 
-    <!-- Added id="primary-menu" and aria-label for accessibility -->
+    <!-- Navigation -->
     <nav class="main-nav" id="primary-menu" aria-label="Main Navigation">
         <ul>
-            <li><a href="<?php echo home_url('/shop'); ?>">Shop</a></li>
-            <li><a href="<?php echo home_url('/test'); ?>">Test drive</a></li>
-            <li><a href="<?php echo home_url('/blog'); ?>">Blog</a></li>
-            <li><a href="<?php echo home_url('/sustainability'); ?>">Sustainability initiatives</a></li>
-            <li><a href="<?php echo home_url('/contact'); ?>">Contact</a></li>
+            <li><a href="<?php echo esc_url(home_url('/shop')); ?>">Shop</a></li>
+            <li><a href="<?php echo esc_url(home_url('/test')); ?>">Test drive</a></li>
+            <li><a href="<?php echo esc_url(home_url('/blog')); ?>">Blog</a></li>
+            <li><a href="<?php echo esc_url(home_url('/sustainability')); ?>">Sustainability initiatives</a></li>
+            <li><a href="<?php echo esc_url(home_url('/contact')); ?>">Contact</a></li>
         </ul>
     </nav>
 
-    <!-- Grouped Account, Cart and Toggle Button on the right -->
+    <!-- Header Right Controls -->
     <div class="header-right">
         <!-- Account Link -->
         <div class="account">
-            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" aria-label="My Account">
-                <!-- User Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <a href="<?php echo esc_url($account_url); ?>" aria-label="My Account">
+                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                 </svg>
@@ -44,9 +50,8 @@
 
         <!-- Cart Link -->
         <div class="cart">
-            <a href="<?php echo home_url('/cart'); ?>" aria-label="Shopping Cart">
-                <!-- Cart Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" aria-hidden="true">
+            <a href="<?php echo esc_url($cart_url); ?>" aria-label="Shopping Cart">
+                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
                     <path d="M0 0h32v32H0z" fill="none" />
                     <circle cx="10" cy="28" r="2" fill="currentColor" />
                     <circle cx="24" cy="28" r="2" fill="currentColor" />
@@ -56,7 +61,7 @@
             </a>
         </div>
 
-        <!-- Accessible Hamburger Toggle Button (WCAG 2.5.8 >= 44x44px) -->
+        <!-- Accessible Hamburger Toggle Button -->
         <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Open main menu">
             <span class="hamburger-bar"></span>
             <span class="hamburger-bar"></span>

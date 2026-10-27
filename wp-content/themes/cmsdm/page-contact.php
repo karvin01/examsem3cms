@@ -1,4 +1,14 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template Name: Contact Page
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+get_header(); 
+?>
 
 <main class="site-main">
     <!-- Contact Page Hero Section -->
@@ -6,7 +16,7 @@
         <div class="contact-hero-container">
             <!-- Left col -->
             <div class="opening-hours">
-                <h1>Opening Hours</h1>
+                <h2>Opening Hours</h2>
                 <div class="opening-hours-info">
                     <ul>
                         <?php 
@@ -29,11 +39,12 @@
                     </ul>
                 </div>
             </div>
+
             <!-- Right col -->
             <div class="map">
-                <h1>Our Location</h1>
+                <h2>Our Location</h2>
                 <div class="map-info">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3607.6663923129713!2d8.444219244931912!3d55.48854680044522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464b20de0dc1b019%3A0xf131cc5b28fe1f27!2sSyddansk%20Erhvervsakademi!5e0!3m2!1scs!2sdk!4v1788886439155!5m2!1scs!2sdk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Showroom location map"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3607.6663923129713!2d8.444219244931912!3d55.48854680044522!2m3!1f0!2f0!3f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464b20de0dc1b019%3A0xf131cc5b28fe1f27!2sSyddansk%20Erhvervsakademi!5e0!3m2!1scs!2sdk!4v1788886439155!5m2!1scs!2sdk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Showroom location map"></iframe>
                 </div>
             </div>
 
@@ -45,7 +56,7 @@
 
             <?php if ($image) : ?>
                 <div class="storefront-preview">
-                    <img src="<?php echo esc_url($image); ?>" alt="Showroom picture">
+                    <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($caption ?: 'Showroom picture'); ?>">
                     <?php if ($caption) : ?>
                         <span class="storefront-caption"><?php echo esc_html($caption); ?></span>
                     <?php endif; ?>
@@ -54,7 +65,7 @@
         </div>
     </section>
 
-    <!-- Contact page showroom video section -->
+    <!-- Showroom video section -->
     <section class="showroom-video-section">
         <div class="showroom-video-container">
             <span class="showroom-subtitle">Take A Tour</span>
@@ -67,17 +78,20 @@
         </div>
     </section>
 
-
-    <!-- Contact form with mail message -->
+    <!-- Contact form section -->
     <section class="contact-form-section" id="contact-form-section">
         <div class="contact-form-container">
             <h2>Send Us A Message</h2>
 
-            <!-- Check for and display transient errors -->
-            <?php if ( $errors = get_transient('contact_form_errors') ) : ?>
+            <!-- Feedback alerts (supports transient or query-param) -->
+            <?php if ( isset($_GET['contact_status']) && $_GET['contact_status'] === 'success' ) : ?>
+                <div class="form-feedback success">
+                    <p>Thank you! Your message has been sent successfully.</p>
+                </div>
+            <?php elseif ( $errors = get_transient('contact_form_errors') ) : ?>
                 <div class="form-feedback error">
                     <ul>
-                        <?php foreach ( $errors as $error ) : ?>
+                        <?php foreach ( (array)$errors as $error ) : ?>
                             <li><?php echo esc_html($error); ?></li>
                         <?php endforeach; ?>
                     </ul>
@@ -85,20 +99,18 @@
                 <?php delete_transient('contact_form_errors'); ?>
             <?php endif; ?>
 
-            <!-- Check for and display transient success -->
-            <?php if ( $success = get_transient('contact_form_success') ) : ?>
-                <div class="form-feedback success">
-                    <p><?php echo esc_html($success); ?></p>
-                </div>
-                <?php delete_transient('contact_form_success'); ?>
-            <?php endif; ?>
-
             <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST" class="custom-contact-form">
-                <!-- Hidden action matches your add_action name in functions.php -->
+                <!-- Action hook for functions.php -->
                 <input type="hidden" name="action" value="handle_contact_form">
 
-                <!-- Security nonce (CSRF Protection) -->
+                <!-- CSRF Nonce -->
                 <?php wp_nonce_field('contact_form_action', 'contact_form_nonce'); ?>
+
+                <!-- Honeypot (bot trap) -->
+                <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+                    <label for="contact_honeypot">Do not fill this field</label>
+                    <input type="text" name="contact_honeypot" id="contact_honeypot" tabindex="-1" autocomplete="off">
+                </div>
 
                 <div class="form-group">
                     <label for="contact_name">Full name <span class="required">*</span></label>
@@ -125,4 +137,5 @@
         </div>
     </section>
 </main>
+
 <?php get_footer(); ?>

@@ -3682,21 +3682,6 @@ body:not(.logged-in).woocommerce-account .woocommerce {
     .woocommerce-account button.woocommerce-form-register__submit {
         width: 100% !important;
     }
-}
-
-/* Tablets (<= 900px) */
-@media (max-width: 900px) {
-    .shop-layout {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
-
-    .shop-sidebar {
-        width: 100%;
-        padding: 1rem 1.25rem;
-        background: #f9fafb;
-    }
 
     .category-collapsible summary.widget-title {
         pointer-events: auto;
@@ -3731,6 +3716,21 @@ body:not(.logged-in).woocommerce-account .woocommerce {
 
     .shop-sidebar .product-categories > li {
         margin-bottom: 0;
+    }
+}
+
+/* Tablets (<= 900px) */
+@media (max-width: 900px) {
+    .shop-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .shop-sidebar {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        background: #f9fafb;
     }
 
     .woocommerce .woocommerce-result-count {
