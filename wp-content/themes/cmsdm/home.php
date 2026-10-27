@@ -37,7 +37,7 @@ get_header();
                                 <?php the_excerpt(); ?>
                             </div>
                             <a href="<?php echo esc_url(get_permalink()); ?>" class="read-more">
-                                <?php echo esc_html__('Read More', 'cmsdm'); ?>
+                                Read More <span class="screen-reader-text">about <?php the_title(); ?></span>
                             </a>
                         </div>
                     </article>
