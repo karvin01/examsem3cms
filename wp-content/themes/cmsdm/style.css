@@ -19,6 +19,18 @@ body {
     color: #1a1a1a;
     background-color: #ffffff;
     line-height: 1.6;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+#content,
+.site-content,
+main#main-content {
+    flex: 1 0 auto;
+    width: 100%;
 }
 
 /* Skip link for keyboard users (WCAG Best Practices) */
@@ -87,13 +99,15 @@ body {
     color: #000000;
 }
 
-/* 3. Right: Actions (Cart + Mobile Toggle) */
+/* 3. Right: Actions (Account + Cart + Mobile Toggle) */
 .header-right {
     display: flex;
     align-items: center;
     gap: 1.25rem;
 }
 
+/* Account & Cart Shared Link Styling */
+.account a,
 .cart a {
     display: inline-flex;
     align-items: center;
@@ -103,14 +117,28 @@ body {
     font-weight: 600;
     font-size: 1.1rem;
     transition: opacity 0.2s ease;
-    min-height: 44px;
+    min-height: 44px; /* WCAG 2.5.8 compliant target size */
     padding: 0.25rem 0.5rem;
 }
 
+.account a svg,
+.cart a svg {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.account a:hover,
 .cart a:hover {
     color: #1a1a1a;          
     opacity: 0.75;           
     text-decoration: none;
+}
+
+.account a:focus-visible,
+.cart a:focus-visible {
+    outline: 2px solid #00F5FF;
+    outline-offset: 2px;
+    border-radius: 4px;
 }
 
 /* 4. Hamburger Button (Hidden on Desktop) */
@@ -151,6 +179,7 @@ body {
     padding: 4rem 2.5rem 2rem;
     margin-top: auto;
     border-top: 1px solid #2d2d2d;
+    flex-shrink: 0;
 }
 
 .footer-container {
@@ -1972,11 +2001,96 @@ body.woocommerce div.product span.onsale,
 }
 
 .woocommerce-cart h1.entry-title,
-.woocommerce-cart h1.page-title {
+.woocommerce-cart h1.page-title,
+.woocommerce-cart h1 {
     font-size: 2.25rem;
     font-weight: 800;
     color: #0f172a;
     margin-bottom: 2rem;
+}
+
+/* 1. Neutralize shop layout containers on the Cart page */
+body.woocommerce-cart .shop-container,
+body.woocommerce-cart .shop-layout,
+body.woocommerce-cart .shop-content-full,
+body.woocommerce-cart .woocommerce {
+    display: block !important;
+    float: none !important;
+    width: 100% !important;
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+}
+
+/* Page heading centered */
+body.woocommerce-cart h1.page-title,
+body.woocommerce-cart h1.entry-title,
+body.woocommerce-cart h1 {
+    font-size: 2.25rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    text-align: center !important;
+    margin: 2.5rem 0 1.5rem 0 !important;
+}
+
+/* 2. Unified Card for Empty State */
+body.woocommerce-cart .cart-empty.woocommerce-info {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 3rem 2rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    color: #0f172a !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    margin: 0 auto 1.5rem auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Remove default blue bar and icon */
+body.woocommerce-cart .cart-empty.woocommerce-info::before {
+    display: none !important;
+}
+
+/* 3. Button Centered Below Card */
+body.woocommerce-cart .return-to-shop {
+    text-align: center !important;
+    margin: 0 0 3rem 0 !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+body.woocommerce-cart .return-to-shop .button.wc-backward {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #9f1239 !important;
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.85rem 2.25rem !important;
+    min-height: 48px !important;
+    text-decoration: none !important;
+    transition: background-color 0.2s ease, transform 0.1s ease !important;
+    box-shadow: 0 2px 4px rgba(159, 18, 57, 0.15) !important;
+}
+
+body.woocommerce-cart .return-to-shop .button.wc-backward:hover {
+    background-color: #881337 !important;
+    transform: translateY(-1px);
+}
+
+body.woocommerce-cart .return-to-shop .button.wc-backward:focus-visible {
+    outline: 2px solid #00F5FF !important;
+    outline-offset: 3px !important;
 }
 
 /* 2-Column Cart Layout for Desktop */
@@ -2095,13 +2209,15 @@ body.woocommerce div.product span.onsale,
     float: left;
 }
 
-.woocommerce table.shop_table td.actions .coupon input.input-text {
+.woocommerce table.shop_table td.actions .coupon input.input-text,
+.woocommerce-cart #coupon_code {
     height: 44px;
     border: 1.5px solid #d1d5db;
     border-radius: 6px;
     padding: 0 1rem;
     font-size: 0.95rem;
-    width: 180px;
+    width: 250px !important;
+    min-width: 240px !important;
     box-sizing: border-box;
 }
 
@@ -2176,6 +2292,41 @@ body.woocommerce div.product span.onsale,
     text-align: right;
     font-size: 0.95rem;
     padding: 0.75rem 0;
+}
+
+/* Coupon [Remove] Button Badge */
+.woocommerce-cart .cart_totals .woocommerce-remove-coupon {
+    font-size: 0 !important; /* Hides default brackets and text */
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: 0.5rem !important;
+    padding: 0.25rem 0.65rem !important;
+    background-color: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    text-decoration: none !important;
+    vertical-align: middle !important;
+    transition: all 0.2s ease !important;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-remove-coupon::after {
+    content: "Remove" !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.03em !important;
+    color: #64748b !important;
+    text-transform: uppercase !important;
+    line-height: 1 !important;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-remove-coupon:hover {
+    background-color: #fee2e2 !important;
+    border-color: #fecdd3 !important;
+}
+
+.woocommerce-cart .cart_totals .woocommerce-remove-coupon:hover::after {
+    color: #e11d48 !important;
 }
 
 .woocommerce-cart .cart_totals table.shop_table tr.order-total th,
@@ -2800,6 +2951,626 @@ ul.woocommerce-order-overview li strong {
 }
 
 /* ==================================================
+   WOOCOMMERCE MY ACCOUNT PAGE
+================================================== */
+/* Container wrapper */
+.woocommerce-account .site-content,
+.woocommerce-account main {
+    max-width: 1200px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+}
+
+.woocommerce-account h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 2rem;
+}
+
+/* 1. Dashboard Layout (Logged In) */
+.woocommerce-account .woocommerce {
+    display: grid !important;
+    grid-template-columns: 280px 1fr !important;
+    gap: 2rem !important;
+    align-items: start !important;
+    width: 100% !important;
+}
+
+/* Clear legacy floats */
+.woocommerce-account .woocommerce::before,
+.woocommerce-account .woocommerce::after {
+    display: none !important;
+}
+
+.woocommerce-MyAccount-navigation {
+    float: none !important;
+    width: 100% !important;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.woocommerce-MyAccount-navigation ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.woocommerce-MyAccount-navigation ul li a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #334155;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    min-height: 44px; /* WCAG AAA target */
+    transition: all 0.2s ease;
+}
+
+.woocommerce-MyAccount-navigation ul li a:hover {
+    background-color: #fff1f2;
+    color: #9f1239;
+}
+
+.woocommerce-MyAccount-navigation ul li.is-active a {
+    background-color: #9f1239;
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+/* Right Content Box */
+.woocommerce-MyAccount-content {
+    float: none !important;
+    width: 100% !important;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    color: #334155;
+    line-height: 1.7;
+    box-sizing: border-box;
+}
+
+.woocommerce-MyAccount-content p {
+    font-size: 1.05rem;
+    margin-bottom: 1.25rem;
+    color: #334155;
+}
+
+.woocommerce-MyAccount-content a {
+    color: #9f1239;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.woocommerce-MyAccount-content a:hover {
+    color: #881337;
+}
+
+/* Orders & Data Tables */
+.woocommerce-MyAccount-content table.shop_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.woocommerce-MyAccount-content table.shop_table th {
+    background: #f8fafc;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.85rem 1rem;
+    border-bottom: 2px solid #e2e8f0;
+    text-align: left;
+}
+
+.woocommerce-MyAccount-content table.shop_table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.woocommerce-MyAccount-content .button {
+    display: inline-flex;
+    align-items: center;
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none !important;
+    min-height: 44px;
+}
+
+.woocommerce-MyAccount-content .button:hover {
+    background: #9f1239 !important;
+    color: #ffffff !important;
+    border-color: #9f1239 !important;
+}
+
+/* 2. Logged-Out View: Login & Registration Columns */
+.woocommerce-account .col2-set#customer_login {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.woocommerce-account .col2-set#customer_login .col-1,
+.woocommerce-account .col2-set#customer_login .col-2 {
+    float: none !important;
+    width: 100% !important;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.woocommerce-account .col2-set#customer_login h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 1.5rem;
+}
+
+.woocommerce-account form.login,
+.woocommerce-account form.register {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.woocommerce-account .woocommerce-form-row {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+.woocommerce-account .woocommerce-form-row label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.4rem;
+}
+
+.woocommerce-account .woocommerce-form-row input.input-text {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #0f172a;
+    box-sizing: border-box;
+}
+
+.woocommerce-account .woocommerce-form-row input.input-text:focus {
+    outline: none;
+    border-color: #9f1239;
+    box-shadow: 0 0 0 3px rgba(159, 18, 57, 0.15);
+}
+
+.woocommerce-account button.woocommerce-button.button {
+    background-color: #9f1239 !important;
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.75rem;
+    min-height: 48px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.woocommerce-account button.woocommerce-button.button:hover {
+    background-color: #881337 !important;
+}
+
+/*my account orders page*/
+/* 1. Account Notice Banner (Confirm Email / Verification) */
+.woocommerce-account .woocommerce-message,
+.woocommerce-account .woocommerce-info {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important; /* Prevents text from breaking onto a second row */
+    gap: 1.5rem !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-left: 4px solid #9f1239 !important; /* Crimson theme accent */
+    border-radius: 8px !important;
+    padding: 1.25rem 1.5rem !important;
+    margin-bottom: 2rem !important;
+    color: #334155 !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.woocommerce-account .woocommerce-info::before,
+.woocommerce-account .woocommerce-message::before {
+    display: none !important; /* Remove legacy WooCommerce icons */
+}
+
+/* Notice button (Confirm email address) */
+.woocommerce-account .woocommerce-info .button,
+.woocommerce-account .woocommerce-message .button {
+    order: 2 !important;
+    margin: 0 !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 0.65rem 1.25rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.woocommerce-account .woocommerce-info .button:hover,
+.woocommerce-account .woocommerce-message .button:hover {
+    background: #9f1239 !important;
+}
+
+/* 2. Orders Table Structure */
+.woocommerce-account table.woocommerce-orders-table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    margin-top: 1rem !important;
+}
+
+.woocommerce-account table.woocommerce-orders-table th {
+    background-color: #f8fafc !important;
+    color: #475569 !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 1rem !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    text-align: left !important;
+}
+
+.woocommerce-account table.woocommerce-orders-table td {
+    padding: 1.25rem 1rem !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    color: #1e293b !important;
+    font-size: 0.95rem !important;
+    vertical-align: middle !important;
+}
+
+.woocommerce-account table.woocommerce-orders-table tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* Order Number Link (#204, #198) */
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-number a {
+    color: #9f1239 !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+}
+
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-number a:hover {
+    text-decoration: underline !important;
+}
+
+/* 3. Actions Column Buttons (Pay, View, Cancel) */
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions {
+    text-align: right !important;
+}
+
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions .button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.45rem 0.9rem !important;
+    margin: 0.2rem 0.15rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    min-height: 40px !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+}
+
+/* "View" button: Clean Outline Style */
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions .button.view {
+    background-color: #f8fafc !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions .button.view:hover {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #0f172a !important;
+}
+
+/* "Pay" button: Crimson Brand Accent */
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions .button.pay {
+    background-color: #9f1239 !important;
+    color: #ffffff !important;
+    border: 1px solid #9f1239 !important;
+}
+
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions .button.pay:hover {
+    background-color: #881337 !important;
+    border-color: #881337 !important;
+}
+
+/* "Cancel" button: Subtle Gray/Muted */
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions .button.cancel {
+    background-color: transparent !important;
+    color: #64748b !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions .button.cancel:hover {
+    background-color: #fee2e2 !important;
+    color: #b91c1c !important;
+    border-color: #fca5a5 !important;
+}
+
+/* Stack heading and edit link, left-aligned */
+.woocommerce-account .woocommerce-Address-title.title {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.35rem !important;
+}
+
+.woocommerce-account .woocommerce-Address-title.title a.edit {
+    float: none !important;
+    margin: 0 !important;
+    text-align: left !important;
+}
+
+/* ACCOUNT DETAILS: PASSWORD CHANGE SECTION */
+
+/* Remove browser default fieldset box and reset padding/margin */
+.woocommerce-EditAccountForm fieldset {
+    border: none !important;
+    padding: 0 !important;
+    margin: 2rem 0 0 0 !important;
+}
+
+/* Style the legend like a clear heading */
+.woocommerce-EditAccountForm fieldset legend {
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 1.25rem !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* Ensure consistent spacing between the password rows */
+.woocommerce-EditAccountForm fieldset p.woocommerce-form-row {
+    margin-bottom: 1.25rem !important;
+}
+
+/* WOOCOMMERCE LOGGED-OUT: LOGIN & REGISTER CARDS */
+
+/* 1. Neutralize the 280px logged-in grid on the wrapper */
+.woocommerce-account:not(.logged-in) .woocommerce,
+body:not(.logged-in).woocommerce-account .woocommerce {
+    display: block !important;
+    width: 100% !important;
+    max-width: 1100px !important;
+    margin: 2rem auto !important;
+}
+
+/* 2. Strict 2-Column Grid for Login & Register */
+.woocommerce-account .col2-set#customer_login {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 2.5rem !important;
+    align-items: start !important; /* Starts both boxes on the exact same horizontal baseline */
+    width: 100% !important;
+    margin: 0 !important;
+    float: none !important;
+}
+
+/* 3. Strip legacy WooCommerce floats completely */
+.woocommerce-account .col2-set#customer_login .col-1,
+.woocommerce-account .col2-set#customer_login .col-2 {
+    float: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 2.5rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    box-sizing: border-box !important;
+}
+
+/* 4. Headings */
+.woocommerce-account .col2-set#customer_login h2 {
+    font-size: 1.6rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    margin: 0 0 1.5rem 0 !important;
+    padding-bottom: 0.75rem !important;
+    border-bottom: 2px solid #9f1239 !important;
+}
+
+/* 5. Forms & Inputs */
+.woocommerce-account form.login,
+.woocommerce-account form.register {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+}
+
+.woocommerce-account form.login p.woocommerce-form-row,
+.woocommerce-account form.register p.woocommerce-form-row {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+.woocommerce-account form.login label,
+.woocommerce-account form.register label {
+    display: block !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    margin-bottom: 0.4rem !important;
+}
+
+.woocommerce-account form.login .input-text,
+.woocommerce-account form.register .input-text {
+    width: 100% !important;
+    padding: 0.75rem 1rem !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    color: #0f172a !important;
+    box-sizing: border-box !important;
+}
+
+.woocommerce-account form.login .input-text:focus,
+.woocommerce-account form.register .input-text:focus {
+    outline: none !important;
+    border-color: #9f1239 !important;
+    box-shadow: 0 0 0 3px rgba(159, 18, 57, 0.15) !important;
+}
+
+/* 6. Checkbox & Password Reset Link */
+.woocommerce-account form.login .woocommerce-form-login__rememberme {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    font-size: 0.95rem !important;
+    color: #475569 !important;
+    cursor: pointer !important;
+}
+
+.woocommerce-account form.login .woocommerce-LostPassword {
+    margin: 0.5rem 0 0 0 !important;
+}
+
+.woocommerce-account form.login .woocommerce-LostPassword a {
+    color: #9f1239 !important;
+    font-weight: 600 !important;
+    text-decoration: underline !important;
+    font-size: 0.9rem !important;
+}
+
+/* 7. Action Buttons */
+.woocommerce-account button.woocommerce-form-login__submit,
+.woocommerce-account button.woocommerce-form-register__submit {
+    background-color: #9f1239 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 2rem !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    min-height: 44px !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease !important;
+    width: fit-content !important;
+}
+
+.woocommerce-account button.woocommerce-form-login__submit:hover,
+.woocommerce-account button.woocommerce-form-register__submit:hover {
+    background-color: #881337 !important;
+}
+
+/* 1. If customer_login exists on the page, force .woocommerce to normal block */
+.woocommerce-account .woocommerce:has(#customer_login) {
+    display: block !important;
+    grid-template-columns: none !important;
+    max-width: 1100px !important;
+    margin: 2rem auto !important;
+}
+
+/* Fallback for browsers without :has support */
+.woocommerce-account .col2-set#customer_login,
+.woocommerce-account #customer_login.u-columns {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 2.5rem !important;
+    width: 100% !important;
+    float: none !important;
+    clear: both !important;
+    margin: 2rem 0 !important;
+}
+
+/* 2. Target both legacy and modern WooCommerce column classnames */
+.woocommerce-account #customer_login .col-1,
+.woocommerce-account #customer_login .col-2,
+.woocommerce-account #customer_login .u-column1,
+.woocommerce-account #customer_login .u-column2 {
+    float: none !important;
+    flex: 1 1 0 !important;
+    width: calc(50% - 1.25rem) !important;
+    max-width: none !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 2.5rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    box-sizing: border-box !important;
+}
+
+/* Clear pseudo elements that WooCommerce uses for clearing floats */
+.woocommerce-account #customer_login::before,
+.woocommerce-account #customer_login::after {
+    display: none !important;
+}
+/* ==================================================
+   WOOCOMMERCE MY ACCOUNT PAGE END
+================================================== */
+
+/* ==================================================
    RESPONSIVE BREAKPOINTS
 ================================================== */
 
@@ -2833,6 +3604,83 @@ ul.woocommerce-order-overview li strong {
     .woocommerce-customer-details .woocommerce-column {
         flex: 1 1 100% !important;
         min-width: 100% !important;
+    }
+
+    /*my account orders page*/
+    .woocommerce-account table.woocommerce-orders-table {
+        border: none !important;
+    }
+
+    .woocommerce-account table.woocommerce-orders-table thead {
+        display: none !important;
+    }
+
+    .woocommerce-account table.woocommerce-orders-table tr {
+        display: block !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        margin-bottom: 1.25rem !important;
+        padding: 1rem !important;
+    }
+
+    .woocommerce-account table.woocommerce-orders-table td {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 0.6rem 0 !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    .woocommerce-account table.woocommerce-orders-table td::before {
+        content: attr(data-title);
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #64748b;
+        text-transform: uppercase;
+    }
+
+    .woocommerce-account table.woocommerce-orders-table td.woocommerce-orders-table__cell-order-actions {
+        justify-content: flex-end !important;
+        gap: 0.5rem !important;
+        padding-top: 1rem !important;
+    }
+
+    .woocommerce-account .woocommerce-message,
+    .woocommerce-account .woocommerce-info {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 1rem !important;
+    }
+
+    .woocommerce-account .woocommerce-info .button,
+    .woocommerce-account .woocommerce-message .button {
+        width: 100% !important;
+        justify-content: center !important;
+        margin-left: 0 !important;
+    }
+
+    .woocommerce-account .col2-set#customer_login,
+    .woocommerce-account #customer_login.u-columns {
+        flex-direction: column !important;
+    }
+
+    .woocommerce-account #customer_login .col-1,
+    .woocommerce-account #customer_login .col-2,
+    .woocommerce-account #customer_login .u-column1,
+    .woocommerce-account #customer_login .u-column2 {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+
+    .woocommerce-account .col2-set#customer_login {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+
+    .woocommerce-account button.woocommerce-form-login__submit,
+    .woocommerce-account button.woocommerce-form-register__submit {
+        width: 100% !important;
     }
 }
 
@@ -2924,6 +3772,16 @@ ul.woocommerce-order-overview li strong {
         grid-column: 1 !important;
         margin-top: 1rem !important;
     }
+
+    /* account styles */
+    .woocommerce-account .woocommerce {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    .woocommerce-account .col2-set#customer_login {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 /* Mobile Devices (<= 768px) */
@@ -2934,9 +3792,34 @@ ul.woocommerce-order-overview li strong {
     }
 
     .logo img {
-        height: 48px;
+        height: 46px;
     }
 
+    /* Keep right actions grouped tightly on the top row */
+    .header-right {
+        gap: 0.5rem;
+    }
+
+    /* Hide text labels; keep accessible 44x44 icon buttons */
+    .account a span,
+    .cart a span {
+        display: none;
+    }
+
+    .account a,
+    .cart a {
+        padding: 0.5rem;
+        min-width: 44px;
+        min-height: 44px;
+        justify-content: center;
+    }
+
+    .account a svg,
+    .cart a svg {
+        font-size: 1.4rem;
+    }
+
+    /* Mobile Hamburger */
     .menu-toggle {
         display: flex;
     }
@@ -2951,6 +3834,7 @@ ul.woocommerce-order-overview li strong {
         transform: translateY(-8px) rotate(-45deg);
     }
 
+    /* Mobile Drawer Navigation (Drops below on toggle) */
     .main-nav {
         display: none;
         order: 3;
@@ -3281,11 +4165,15 @@ ul.woocommerce-order-overview li strong {
 /* Small Screens (<= 480px) */
 @media (max-width: 480px) {
     .site-header {
-        padding: 0.75rem 1rem;
+        padding: 0.6rem 1rem;
     }
 
     .logo img {
-        height: 42px;
+        height: 38px;
+    }
+
+    .header-right {
+        gap: 0.25rem;
     }
 
     .hero-title {

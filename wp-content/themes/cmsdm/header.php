@@ -28,8 +28,21 @@
         </ul>
     </nav>
 
-    <!-- Grouped Cart and Toggle Button on the right -->
+    <!-- Grouped Account, Cart and Toggle Button on the right -->
     <div class="header-right">
+        <!-- Account Link -->
+        <div class="account">
+            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" aria-label="My Account">
+                <!-- User Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>Account</span>
+            </a>
+        </div>
+
+        <!-- Cart Link -->
         <div class="cart">
             <a href="<?php echo home_url('/cart'); ?>" aria-label="Shopping Cart">
                 <!-- Cart Icon -->
@@ -52,4 +65,4 @@
     </div>
 </header>
 
-<div id="content" class="site-content"></div>
+<div id="content" class="site-content">
